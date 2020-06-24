@@ -1,0 +1,995 @@
+<!DOCTYPE html><html lang="en-us" >
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.8.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Rahul Nair">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="In this post, I&rsquo;ll review a paper from 2018 that deals with generating boolean decision rules and uses column generation. The paper is well worth the read if you are interested in explainable AI models.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://rahulnair23.github.io/post/boolean-rules/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  <script src="/js/mathjax-config.js"></script>
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-1/css/all.min.css" integrity="sha256-4w9DunooKSr3MFXHXWyFER38WmPdm361bQS/2KUWZbU=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css" integrity="sha256-Vzbj7sDDS/woiFS3uNKo8eIuni59rjyNGtXfstRzStA=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css" integrity="sha256-SHMGCYmST46SoyGgo4YR/9AlK1vf3ff84Aq9yK4hdqM=" crossorigin="anonymous">
+    
+
+    
+
+    
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.1.2/lazysizes.min.js" integrity="sha256-Md1qLToewPeKjfAHU1zyPwOutccPAm5tahnaw7Osw0A=" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+    
+      
+
+      
+      
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" integrity="" crossorigin="anonymous" async></script>
+      
+    
+      
+
+      
+      
+
+      
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400;700%7CIBM+Plex+Mono&display=swap">
+  
+
+  
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.css">
+
+  
+
+
+
+
+  
+
+
+  
+  
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
+
+  <link rel="canonical" href="https://rahulnair23.github.io/post/boolean-rules/">
+
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="og:site_name" content="Rahul Nair">
+  <meta property="og:url" content="https://rahulnair23.github.io/post/boolean-rules/">
+  <meta property="og:title" content="Model explanations via column generation | Rahul Nair">
+  <meta property="og:description" content="In this post, I&rsquo;ll review a paper from 2018 that deals with generating boolean decision rules and uses column generation. The paper is well worth the read if you are interested in explainable AI models."><meta property="og:image" content="https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
+  <meta property="twitter:image" content="https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2020-06-16T10:46:12&#43;01:00">
+    
+    <meta property="article:modified_time" content="2020-06-16T10:46:12&#43;01:00">
+  
+
+  
+
+
+    
+
+
+
+
+
+
+  
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://rahulnair23.github.io/post/boolean-rules/"
+  },
+  "headline": "Model explanations via column generation",
+  
+  "datePublished": "2020-06-16T10:46:12+01:00",
+  "dateModified": "2020-06-16T10:46:12+01:00",
+  
+  "author": {
+    "@type": "Person",
+    "name": "Rahul Nair"
+  },
+  
+  "publisher": {
+    "@type": "Organization",
+    "name": "Rahul Nair",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
+    }
+  },
+  "description": "In this post, I\u0026rsquo;ll review a paper from 2018 that deals with generating boolean decision rules and uses column generation. The paper is well worth the read if you are interested in explainable AI models."
+}
+</script>
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Model explanations via column generation | Rahul Nair</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+
+
+
+
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+
+    
+    <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#navbar-content" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span><i class="fas fa-bars"></i></span>
+    </button>
+    
+
+    
+
+    
+    
+    <div class="navbar-collapse main-menu-item collapse justify-content-start" id="navbar-content">
+
+      
+      <ul class="navbar-nav d-md-inline-flex">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#posts"><span>Posts</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#featured"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+      
+
+        
+      </ul>
+    </div>
+
+    <ul class="nav-icons navbar-nav flex-row ml-auto d-flex pl-md-2">
+      
+      <li class="nav-item">
+        <a class="nav-link js-search" href="#" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></a>
+      </li>
+      
+
+      
+
+      
+
+    </ul>
+
+  </div>
+</nav>
+
+
+  <article class="article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1>Model explanations via column generation</h1>
+
+  
+
+  
+    
+
+
+<div class="article-metadata">
+
+  
+  
+
+  
+  <span class="article-date">
+    
+    
+      
+    
+    Jun 16, 2020
+  </span>
+  
+
+  
+
+  
+
+  
+  
+  
+
+  
+  
+
+</div>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style">
+      <p>In this post, I&rsquo;ll review a paper from 2018 that deals with generating boolean decision rules and uses column generation. The 
+<a href="https://dl.acm.org/doi/10.5555/3327345.3327376" target="_blank" rel="noopener">paper</a> is well worth the read if you are interested in explainable AI models. The work also won the 
+<a href="https://community.fico.com/s/explainable-machine-learning-challenge" target="_blank" rel="noopener">FICO explainability challenge</a> by applying this method to data from the financial services sector.</p>
+<h1 id="setting">Setting</h1>
+<p>Algorithmic decisions - ones where you rely on machines to reach a conclusion - require justification. Why was my loan approval denied? Why was the scan result classified as cancerous? In these and several other critical sectors, simply stating the prediction of a AI system is not enough. The underlying rationale of &ldquo;why&rdquo; is equally important.</p>
+<p>Several methods seek to come up with the justification algorithmically (in a field called Explainable AI) and several methods exist that can be distinguished along several dimensions. The main one is scope. The <em>global</em> methods look to explain the entire model, i.e. how does the model behave? This contrasts with <em>local</em> methods that look to explain a single instance, i.e. why was my loan not approved?</p>
+<p>When the models are complex, as is often the case, a popular class of methods are surrogate models. The basic goal here is to build a simpler (e.g. linear) version of a complex model, then look to interpret the simpler model in ways we humans can understand. When built for <em>local</em> explanations, these probe the neighborhood of test instance to build a surrogate of the complex model.</p>
+<p>Unfortunately, it is hard to be objective when it comes to explanations. In practice, different methods will result in vastly different explanations for the same instance on the same underlying (complex) model. For minor changes in training samples or an adjustment of parameters, even the same method can give you very different results. Fundamentally, these approaches are limited by design. If you prescribe to the view that a machine learning (ML) model is all but a lossy compressed view on the data, then surrogate models are a lossy compressed view of the ML model. Significant challenges remain in practical deployments.</p>
+<p>An alternative view, the one described in the paper, is one where the model is directly interpretable. A directly interpretable model is one that can be understood by humans. There are of course, several models like decision trees that fall in this category.</p>
+<h1 id="the-problem">The problem</h1>
+<p>Consider a supervised binary classification task. You are given $(X_i, y_i)$ for observations $i = 1,&hellip;, n$, where $X_i$ is the set of features associated with observation $i$ and $y_i$ is the binary outcome label. The task is to build a boolean classifier $\hat{y}(\mathbf{x})$ that can be stated as</p>
+<pre><code>if (condition) then (predict True) else (predict False)
+</code></pre>
+<p>where <code>(condition)</code> is of a specific form called a Disjunctive Normal Form (DNF). DNF clauses are OR of ANDs. A DNF clause on when to drink beer would be <code>(mood=HAPPY AND inventory&gt;0) OR (mood=SAD AND inventory&gt;0) OR (temp&gt;15°C)</code>.</p>
+<p>For a dataset there are exponentially many such clauses involving its features. The challenge is to find a relatively compact subset that provides the best prediction accuracy. The condition needs to be compact as overly complex clauses are not interpretable.</p>
+<h1 id="the-model">The model</h1>
+<p>The 
+<a href="https://dl.acm.org/doi/10.5555/3327345.3327376" target="_blank" rel="noopener">paper</a> formulates the search for these clauses as a mixed-integer programming problem.</p>
+<p>$P$ denotes the set of positive samples, i.e. the observations where $y_i = 1$ and $Z$ denote negative ones. All features in $X_i$ are assumed to be binary valued. This isn&rsquo;t too restrictive, continuous and categorical data can be encoded this way.  There is $K$ a set of (exponentially many) clauses involving features of $X$ and $K_i, K_i\subseteq K$ is the subset of clauses satisfied by observation $i$.</p>
+<p>There are two decision variables. First is $w_k$ (for all $k$ in set $K$) - a binary variable on if clause $k$ is selected for the model. Each clause $k$ in $K$ has an associated complexity $c_k$. The second is $\xi_i$ defined for $i \in P$ (i.e. for all positive samples) denotes all samples that are classified incorrectly.</p>
+<p>The objective looks to minimize Hamming loss which is the fraction of misclassified samples. Specifically, this can be written as</p>
+<p>$$
+\min_{\xi, w} \color{blue}\underbrace{\color{black}\sum_{i\in P} \xi_i}_{\text{false negatives}} {\color{black}+}
+\color{blue}\underbrace{\color{black}\sum_{i\in Z}\sum_{k\in K_i} w_k}_{\text{false positives}}
+$$</p>
+<p>False positives add more than &ldquo;one unit&rdquo; if multiple clauses are satisfied. This is</p>
+<p>$$\begin{aligned}
+\mbox{s.t.} \qquad &amp; \xi_i + \sum_{k\in K_i} w_k \ge 1 \qquad \xi_i \ge 0, \qquad i\in P \\<br>
+&amp; \sum_{k\in K} c_k w_k \le C \\<br>
+&amp; w_k \in \{0, 1\} \qquad \forall k\in K
+\end{aligned}
+$$</p>
+<p>The first constraint looks to identify false negatives. It basically says, for each positive sample, either chalk up a false negative ($\xi_i$) or include a rule that correctly represents this observation (i.e. a clause from the set $K_i$). The second constraint simply bounds the total complexity of the selected rule set to a parameter $C$.</p>
+<p>The overall problem still remains however, the set $K$ is very large and we&rsquo;d like to avoid having to generate the entire set. This mainly because, it is expensive to generate and solve for all $K$. In any case, only a few $w_k$ will be selected in the final solution, so it makes sense to only look at clauses as needed.</p>
+<p>In the maximum clique 
+<a href="../max-clique">post</a> earlier, this type of exponential growth was addressed using constraint generation. In this work, they follow a column generation procedure - one of generating new variables ($w_k$) as needed. Adding rows and columns to a optimization program are strongly coupled topics. Adding a constraint (row) to a program is  the same as adding a variable (column) to its dual.</p>
+<h2 id="the-pricing-problem">The pricing problem</h2>
+<p>Now to the problem of generating new conjunctive clauses. The sub-problem looks to find the missing clause with the highest reduced cost, i.e. the clause that has the greatest impact on the objective function. This is a heuristic selection and you may have to undo a selection at a later step. But if no missing clause with a negative reduced cost can be found, the procedure terminates with the optimal solution.</p>
+<p>A bit more notation. From the program above, take $\mu_i$ to be the dual variables associated with the first constraint, and $\lambda$ be the dual variable for the complexity constraint. Define two sets of decision variables $\delta_i$ for all observations $i$ and $z_j$ if feature $j\in J$ is selected in missing constraint. Additionally denote $S_i$ to be a set of zero valued features for sample $i$.</p>
+<p>Armed with this, the sub-problem to identify a clause to include (with the greatest negative reduce cost) can be formulated as:</p>
+<p>$$
+\min_{\delta, z} \color{blue}\underbrace{\color{black}\lambda\left(1+\sum_{j\in J}z_j\right)}_{\substack{\text{complexity of new rule}\\\text{in terms of features selected}}} {\color{black}-}
+\color{blue}\underbrace{\color{black}\sum_{i\in P} \mu_i \delta_i}_{\substack{\text{how much the new rule}\\\text{improves false negatives}}}{\color{black}+}
+\color{blue}\underbrace{\color{black}\sum_{i\in Z} \delta_i}_{\substack{\text{how much the new rule}\\\text{hurts false positives}}}
+$$</p>
+<p>$$\begin{aligned}
+\mbox{s.t.} \qquad &amp; \delta_i + z_j\le 1 \qquad j\in S_i, \qquad i\in P \\<br>
+&amp;  \delta_i \ge 1- \sum_{j\in S_i} z_j \qquad \delta_i\ge 0 \qquad i\in Z\\<br>
+&amp; \sum_{j\in J} z_j \le D \\<br>
+&amp; z_j \in \{0, 1\} \qquad \forall j\in J
+\end{aligned}
+$$</p>
+<p>The first constraint here says every zero-valued feature in every positive sample - the feature is either selected or the sample satisfies the clause. The next constraint states that the $i$-th negative sample is covered only if no zero-valued feature is selected. The next constraint bounds the complexity and the feature selection variables are restricted to be binary.</p>
+<h2 id="conclusions">Conclusions</h2>
+<p>The method appears to be well suited for transactional-type data, where there are some underlying rules (e.g. a business process) that generates the training data. I leave you with an interesting example. The tic-tac-toe 
+<a href="https://archive.ics.uci.edu/ml/datasets/Tic-Tac-Toe&#43;Endgame" target="_blank" rel="noopener">dataset</a> contains all possible board configurations at the end of a 
+<a href="https://en.wikipedia.org/wiki/Tic-tac-toe" target="_blank" rel="noopener">tic-tac-toe game</a> and the outcome (if <code>x</code> won or not). The method extracts almost all the rules of the game based on just this data, just missing the diagonal cases. Some of the rules extracted are superfluous.</p>
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+<figure id="figure-rules-extracted-from-tic-tac-toe-data">
+
+
+  <a data-fancybox="" href="/post/boolean-rules/tictactoe_hu1ec8a325d060e5397d7307828d9e84ef_98406_2000x2000_fit_q90_lanczos.jpg" data-caption="Rules extracted from tic-tac-toe data">
+
+
+  <img data-src="/post/boolean-rules/tictactoe_hu1ec8a325d060e5397d7307828d9e84ef_98406_2000x2000_fit_q90_lanczos.jpg" class="lazyload" alt="" width="1270" height="618">
+</a>
+
+
+  
+  
+  <figcaption>
+    Rules extracted from tic-tac-toe data
+  </figcaption>
+
+
+</figure>
+
+<p>As with all things, the approach comes with some limitations. There is a complexity-accuracy tradeoff, expect classifier accuracy to drop. Although in my experiments this was not substantial. The clauses generated are sensitive to the parameter $C$. If you don&rsquo;t have a mechanism to validate the rule set then it is difficult to tune. The method doesn&rsquo;t deal with class-imbalance, so you would need to under/over-sample to get a balanced sample. It would also worthwhile to study clauses generated in the presence of highly correlated features. I expect one of the correlated features to be picked arbitrarily.</p>
+<h1 id="resources">Resources</h1>
+<p>A modified implementation of the model is available through the 
+<a href="https://github.com/IBM/AIX360/" target="_blank" rel="noopener">AIX360</a> toolkit, so you can try it yourself. The differences are documented in another 
+<a href="https://arxiv.org/pdf/1909.03012.pdf" target="_blank" rel="noopener">paper</a>. Mainly, it uses a beam search heuristic instead of the pricing problem. Additionally, the complexity clauses are handled through two regularization terms, rather than a constraint.</p>
+
+    </div>
+
+    
+
+
+
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tag/aix360/">AIX360</a>
+  
+  <a class="badge badge-light" href="/tag/boolean-decision-rules/">boolean decision rules</a>
+  
+  <a class="badge badge-light" href="/tag/column-generation/">column generation</a>
+  
+  <a class="badge badge-light" href="/tag/explainability/">explainability</a>
+  
+  <a class="badge badge-light" href="/tag/mixed-integer-programming/">mixed integer programming</a>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+  
+    
+    
+    
+      
+    
+    
+    
+    <div class="media author-card content-widget-hr">
+      
+        
+        <img class="avatar mr-3 avatar-circle" src="/author/rahul-nair/avatar_hu1beb5417ffad9c8705e9858d9764b531_15417_270x270_fill_q90_lanczos_center.jpg" alt="Rahul Nair">
+      
+
+      <div class="media-body">
+        <h5 class="card-title"><a href="https://rahulnair23.github.io/">Rahul Nair</a></h5>
+        <h6 class="card-subtitle">Research Staff Member</h6>
+        
+        <ul class="network-icon" aria-hidden="true">
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+    <li>
+      <a href="mailto:rahul.nair@ie.ibm.com" >
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://twitter.com/psciencepeddler" target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://scholar.google.com/citations?user=rCo_gNYAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+        <i class="ai ai-google-scholar"></i>
+      </a>
+    </li>
+  
+    
+    
+    
+      
+    
+    
+    
+    
+    
+      
+    
+    <li>
+      <a href="https://github.com/rahulnair23" target="_blank" rel="noopener">
+        <i class="fab fa-github"></i>
+      </a>
+    </li>
+  
+</ul>
+
+      </div>
+    </div>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  </div>
+</article>
+
+      
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js" integrity="sha256-eOgo0OtLL4cdq7RdwRUiGKLX9XsIJ7nGhWEKbohmVAQ=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/languages/r.min.js"></script>
+        
+      
+
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js" integrity="sha256-EErZamuLefUnbMBQbsEqu1USa+btR2oIlCpBJbyD4/g=" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>const code_highlighting = true;</script>
+    
+
+    
+    
+    <script>const isSiteThemeDark = false;</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.37431be2d92d7fb0160054761ab79602.js"></script>
+
+    
+
+
+
+
+
+
+  
+  
+  <div class="container">
+    <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+  </p>
+
+  
+  
+
+
+
+
+
+
+  <p class="powered-by">
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" class="back-to-top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+  </div>
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

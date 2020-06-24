@@ -5,12 +5,119 @@
     <link>https://rahulnair23.github.io/</link>
       <atom:link href="https://rahulnair23.github.io/index.xml" rel="self" type="application/rss+xml" />
     <description>Rahul Nair</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 05 Jun 2020 10:44:59 +0100</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 16 Jun 2020 10:46:12 +0100</lastBuildDate>
     <image>
       <url>https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Rahul Nair</title>
       <link>https://rahulnair23.github.io/</link>
     </image>
+    
+    <item>
+      <title>Model explanations via column generation</title>
+      <link>https://rahulnair23.github.io/post/boolean-rules/</link>
+      <pubDate>Tue, 16 Jun 2020 10:46:12 +0100</pubDate>
+      <guid>https://rahulnair23.github.io/post/boolean-rules/</guid>
+      <description>&lt;p&gt;In this post, I&amp;rsquo;ll review a paper from 2018 that deals with generating boolean decision rules and uses column generation. The 
+&lt;a href=&#34;https://dl.acm.org/doi/10.5555/3327345.3327376&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;paper&lt;/a&gt; is well worth the read if you are interested in explainable AI models. The work also won the 
+&lt;a href=&#34;https://community.fico.com/s/explainable-machine-learning-challenge&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;FICO explainability challenge&lt;/a&gt; by applying this method to data from the financial services sector.&lt;/p&gt;
+&lt;h1 id=&#34;setting&#34;&gt;Setting&lt;/h1&gt;
+&lt;p&gt;Algorithmic decisions - ones where you rely on machines to reach a conclusion - require justification. Why was my loan approval denied? Why was the scan result classified as cancerous? In these and several other critical sectors, simply stating the prediction of a AI system is not enough. The underlying rationale of &amp;ldquo;why&amp;rdquo; is equally important.&lt;/p&gt;
+&lt;p&gt;Several methods seek to come up with the justification algorithmically (in a field called Explainable AI) and several methods exist that can be distinguished along several dimensions. The main one is scope. The &lt;em&gt;global&lt;/em&gt; methods look to explain the entire model, i.e. how does the model behave? This contrasts with &lt;em&gt;local&lt;/em&gt; methods that look to explain a single instance, i.e. why was my loan not approved?&lt;/p&gt;
+&lt;p&gt;When the models are complex, as is often the case, a popular class of methods are surrogate models. The basic goal here is to build a simpler (e.g. linear) version of a complex model, then look to interpret the simpler model in ways we humans can understand. When built for &lt;em&gt;local&lt;/em&gt; explanations, these probe the neighborhood of test instance to build a surrogate of the complex model.&lt;/p&gt;
+&lt;p&gt;Unfortunately, it is hard to be objective when it comes to explanations. In practice, different methods will result in vastly different explanations for the same instance on the same underlying (complex) model. For minor changes in training samples or an adjustment of parameters, even the same method can give you very different results. Fundamentally, these approaches are limited by design. If you prescribe to the view that a machine learning (ML) model is all but a lossy compressed view on the data, then surrogate models are a lossy compressed view of the ML model. Significant challenges remain in practical deployments.&lt;/p&gt;
+&lt;p&gt;An alternative view, the one described in the paper, is one where the model is directly interpretable. A directly interpretable model is one that can be understood by humans. There are of course, several models like decision trees that fall in this category.&lt;/p&gt;
+&lt;h1 id=&#34;the-problem&#34;&gt;The problem&lt;/h1&gt;
+&lt;p&gt;Consider a supervised binary classification task. You are given $(X_i, y_i)$ for observations $i = 1,&amp;hellip;, n$, where $X_i$ is the set of features associated with observation $i$ and $y_i$ is the binary outcome label. The task is to build a boolean classifier $\hat{y}(\mathbf{x})$ that can be stated as&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;if (condition) then (predict True) else (predict False)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;where &lt;code&gt;(condition)&lt;/code&gt; is of a specific form called a Disjunctive Normal Form (DNF). DNF clauses are OR of ANDs. A DNF clause on when to drink beer would be &lt;code&gt;(mood=HAPPY AND inventory&amp;gt;0) OR (mood=SAD AND inventory&amp;gt;0) OR (temp&amp;gt;15°C)&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;For a dataset there are exponentially many such clauses involving its features. The challenge is to find a relatively compact subset that provides the best prediction accuracy. The condition needs to be compact as overly complex clauses are not interpretable.&lt;/p&gt;
+&lt;h1 id=&#34;the-model&#34;&gt;The model&lt;/h1&gt;
+&lt;p&gt;The 
+&lt;a href=&#34;https://dl.acm.org/doi/10.5555/3327345.3327376&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;paper&lt;/a&gt; formulates the search for these clauses as a mixed-integer programming problem.&lt;/p&gt;
+&lt;p&gt;$P$ denotes the set of positive samples, i.e. the observations where $y_i = 1$ and $Z$ denote negative ones. All features in $X_i$ are assumed to be binary valued. This isn&amp;rsquo;t too restrictive, continuous and categorical data can be encoded this way.  There is $K$ a set of (exponentially many) clauses involving features of $X$ and $K_i, K_i\subseteq K$ is the subset of clauses satisfied by observation $i$.&lt;/p&gt;
+&lt;p&gt;There are two decision variables. First is $w_k$ (for all $k$ in set $K$) - a binary variable on if clause $k$ is selected for the model. Each clause $k$ in $K$ has an associated complexity $c_k$. The second is $\xi_i$ defined for $i \in P$ (i.e. for all positive samples) denotes all samples that are classified incorrectly.&lt;/p&gt;
+&lt;p&gt;The objective looks to minimize Hamming loss which is the fraction of misclassified samples. Specifically, this can be written as&lt;/p&gt;
+&lt;p&gt;$$
+\min_{\xi, w} \color{blue}\underbrace{\color{black}\sum_{i\in P} \xi_i}_{\text{false negatives}} {\color{black}+}
+\color{blue}\underbrace{\color{black}\sum_{i\in Z}\sum_{k\in K_i} w_k}_{\text{false positives}}
+$$&lt;/p&gt;
+&lt;p&gt;False positives add more than &amp;ldquo;one unit&amp;rdquo; if multiple clauses are satisfied. This is&lt;/p&gt;
+&lt;p&gt;$$\begin{aligned}
+\mbox{s.t.} \qquad &amp;amp; \xi_i + \sum_{k\in K_i} w_k \ge 1 \qquad \xi_i \ge 0, \qquad i\in P \\&lt;br&gt;
+&amp;amp; \sum_{k\in K} c_k w_k \le C \\&lt;br&gt;
+&amp;amp; w_k \in \{0, 1\} \qquad \forall k\in K
+\end{aligned}
+$$&lt;/p&gt;
+&lt;p&gt;The first constraint looks to identify false negatives. It basically says, for each positive sample, either chalk up a false negative ($\xi_i$) or include a rule that correctly represents this observation (i.e. a clause from the set $K_i$). The second constraint simply bounds the total complexity of the selected rule set to a parameter $C$.&lt;/p&gt;
+&lt;p&gt;The overall problem still remains however, the set $K$ is very large and we&amp;rsquo;d like to avoid having to generate the entire set. This mainly because, it is expensive to generate and solve for all $K$. In any case, only a few $w_k$ will be selected in the final solution, so it makes sense to only look at clauses as needed.&lt;/p&gt;
+&lt;p&gt;In the maximum clique 
+&lt;a href=&#34;../max-clique&#34;&gt;post&lt;/a&gt; earlier, this type of exponential growth was addressed using constraint generation. In this work, they follow a column generation procedure - one of generating new variables ($w_k$) as needed. Adding rows and columns to a optimization program are strongly coupled topics. Adding a constraint (row) to a program is  the same as adding a variable (column) to its dual.&lt;/p&gt;
+&lt;h2 id=&#34;the-pricing-problem&#34;&gt;The pricing problem&lt;/h2&gt;
+&lt;p&gt;Now to the problem of generating new conjunctive clauses. The sub-problem looks to find the missing clause with the highest reduced cost, i.e. the clause that has the greatest impact on the objective function. This is a heuristic selection and you may have to undo a selection at a later step. But if no missing clause with a negative reduced cost can be found, the procedure terminates with the optimal solution.&lt;/p&gt;
+&lt;p&gt;A bit more notation. From the program above, take $\mu_i$ to be the dual variables associated with the first constraint, and $\lambda$ be the dual variable for the complexity constraint. Define two sets of decision variables $\delta_i$ for all observations $i$ and $z_j$ if feature $j\in J$ is selected in missing constraint. Additionally denote $S_i$ to be a set of zero valued features for sample $i$.&lt;/p&gt;
+&lt;p&gt;Armed with this, the sub-problem to identify a clause to include (with the greatest negative reduce cost) can be formulated as:&lt;/p&gt;
+&lt;p&gt;$$
+\min_{\delta, z} \color{blue}\underbrace{\color{black}\lambda\left(1+\sum_{j\in J}z_j\right)}_{\substack{\text{complexity of new rule}\\\text{in terms of features selected}}} {\color{black}-}
+\color{blue}\underbrace{\color{black}\sum_{i\in P} \mu_i \delta_i}_{\substack{\text{how much the new rule}\\\text{improves false negatives}}}{\color{black}+}
+\color{blue}\underbrace{\color{black}\sum_{i\in Z} \delta_i}_{\substack{\text{how much the new rule}\\\text{hurts false positives}}}
+$$&lt;/p&gt;
+&lt;p&gt;$$\begin{aligned}
+\mbox{s.t.} \qquad &amp;amp; \delta_i + z_j\le 1 \qquad j\in S_i, \qquad i\in P \\&lt;br&gt;
+&amp;amp;  \delta_i \ge 1- \sum_{j\in S_i} z_j \qquad \delta_i\ge 0 \qquad i\in Z\\&lt;br&gt;
+&amp;amp; \sum_{j\in J} z_j \le D \\&lt;br&gt;
+&amp;amp; z_j \in \{0, 1\} \qquad \forall j\in J
+\end{aligned}
+$$&lt;/p&gt;
+&lt;p&gt;The first constraint here says every zero-valued feature in every positive sample - the feature is either selected or the sample satisfies the clause. The next constraint states that the $i$-th negative sample is covered only if no zero-valued feature is selected. The next constraint bounds the complexity and the feature selection variables are restricted to be binary.&lt;/p&gt;
+&lt;h2 id=&#34;conclusions&#34;&gt;Conclusions&lt;/h2&gt;
+&lt;p&gt;The method appears to be well suited for transactional-type data, where there are some underlying rules (e.g. a business process) that generates the training data. I leave you with an interesting example. The tic-tac-toe 
+&lt;a href=&#34;https://archive.ics.uci.edu/ml/datasets/Tic-Tac-Toe&amp;#43;Endgame&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;dataset&lt;/a&gt; contains all possible board configurations at the end of a 
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Tic-tac-toe&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;tic-tac-toe game&lt;/a&gt; and the outcome (if &lt;code&gt;x&lt;/code&gt; won or not). The method extracts almost all the rules of the game based on just this data, just missing the diagonal cases. Some of the rules extracted are superfluous.&lt;/p&gt;
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure id=&#34;figure-rules-extracted-from-tic-tac-toe-data&#34;&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://rahulnair23.github.io/post/boolean-rules/tictactoe_hu1ec8a325d060e5397d7307828d9e84ef_98406_2000x2000_fit_q90_lanczos.jpg&#34; data-caption=&#34;Rules extracted from tic-tac-toe data&#34;&gt;
+
+
+  &lt;img data-src=&#34;https://rahulnair23.github.io/post/boolean-rules/tictactoe_hu1ec8a325d060e5397d7307828d9e84ef_98406_2000x2000_fit_q90_lanczos.jpg&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;1270&#34; height=&#34;618&#34;&gt;
+&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    Rules extracted from tic-tac-toe data
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+&lt;p&gt;As with all things, the approach comes with some limitations. There is a complexity-accuracy tradeoff, expect classifier accuracy to drop. Although in my experiments this was not substantial. The clauses generated are sensitive to the parameter $C$. If you don&amp;rsquo;t have a mechanism to validate the rule set then it is difficult to tune. The method doesn&amp;rsquo;t deal with class-imbalance, so you would need to under/over-sample to get a balanced sample. It would also worthwhile to study clauses generated in the presence of highly correlated features. I expect one of the correlated features to be picked arbitrarily.&lt;/p&gt;
+&lt;h1 id=&#34;resources&#34;&gt;Resources&lt;/h1&gt;
+&lt;p&gt;A modified implementation of the model is available through the 
+&lt;a href=&#34;https://github.com/IBM/AIX360/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;AIX360&lt;/a&gt; toolkit, so you can try it yourself. The differences are documented in another 
+&lt;a href=&#34;https://arxiv.org/pdf/1909.03012.pdf&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;paper&lt;/a&gt;. Mainly, it uses a beam search heuristic instead of the pricing problem. Additionally, the complexity clauses are handled through two regularization terms, rather than a constraint.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Maximum weighted cliques in a graph</title>
@@ -34,7 +141,7 @@ $$&lt;/p&gt;
 &lt;p&gt;As pointed out in the 
 &lt;a href=&#34;https://doi.org/10.1007/BF01098364&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;paper&lt;/a&gt; this formulation isn&amp;rsquo;t useful in practice on account of two problems. First, the linear relaxation, one where the integrality constraints $x_i \in {0, 1}$ is omitted, gives a poor bound. The second is on account of symmetry. Symmetry arises in this context as vertices with the same weight are indistinguishable. So several configurations result in the same optimal solution. Why is this bad? The branch and cut tree cannot prune the search tree as solutions are in various parts of it. One way to remove symmetry is to do lexicographical ordering. An arbitrary order is imposed via additional constraints that cuts of several optimal solutions knowing that at least one optimal solution is valid. There are other methods as well, such as 
 &lt;a href=&#34;https://doi.org/10.1007/s10107-002-0358-2&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;isomorphic pruning&lt;/a&gt;, and 
-&lt;a href=&#34;https://doi.org/10.1016/j.disopt.2011.07.001&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;orbitopal fixing&lt;/a&gt;,&lt;/p&gt;
+&lt;a href=&#34;https://doi.org/10.1016/j.disopt.2011.07.001&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;orbitopal fixing&lt;/a&gt;, but we won&amp;rsquo;t get into those here.&lt;/p&gt;
 &lt;h2 id=&#34;an-alternative-formulation&#34;&gt;An alternative formulation&lt;/h2&gt;
 &lt;p&gt;The notion of the complement edge set $\bar{E}$ can be strengthened using independent sets. If you know an independent set, a clique can contain at most one vertex from such a set. To write this as a constraint, one would need to consider &lt;em&gt;maximum&lt;/em&gt; independent sets, lest you allow the omitted vertices to be included in the clique. Further, you would need to look at all maximum independent sets that arise in $G$. Assume for a moment that the set of maximum independent sets $\mathbb{S}$ is known. Then the problem of finding the maximum weighted clique can be written as&lt;/p&gt;
 &lt;p&gt;$$\begin{aligned}
