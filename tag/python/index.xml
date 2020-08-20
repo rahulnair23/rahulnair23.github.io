@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>python | Rahul Nair</title>
+    <link>https://rahulnair23.github.io/tag/python/</link>
+      <atom:link href="https://rahulnair23.github.io/tag/python/index.xml" rel="self" type="application/rss+xml" />
+    <description>python</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Thu, 20 Aug 2020 13:16:40 +0100</lastBuildDate>
+    <image>
+      <url>https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <title>python</title>
+      <link>https://rahulnair23.github.io/tag/python/</link>
+    </image>
+    
+    <item>
+      <title>Oh Python</title>
+      <link>https://rahulnair23.github.io/post/oh-python/</link>
+      <pubDate>Thu, 20 Aug 2020 13:16:40 +0100</pubDate>
+      <guid>https://rahulnair23.github.io/post/oh-python/</guid>
+      <description>&lt;p&gt;Suppose you have a list of objects that you need to iterate over two consecutive items at a time.&lt;/p&gt;
+&lt;p&gt;An old 
+&lt;a href=&#34;https://stackoverflow.com/questions/16789776/iterating-over-two-values-of-a-list-at-a-time-in-python&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;stackoverflow&lt;/a&gt; question for this leads to the a quote from the 
+&lt;a href=&#34;https://docs.python.org/2/library/functions.html#zip&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;documentation&lt;/a&gt; that reads:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This makes possible an idiom for clustering a data series into n-length groups using &lt;code&gt;zip(*[iter(s)]*n)&lt;/code&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;So the solution would be:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-(python)&#34;&gt;k = [1, 2, 3, 4, 5, 6]
+list(zip(*[iter(k)]*2))
+# [(1, 2), (3, 4), (5, 6)]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is a whole other level of python! And rather poor for the documentation to suggest it frankly. Let&amp;rsquo;s break it down to understand why this works.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Let&amp;rsquo;s start with the inner most bit. &lt;code&gt;iter&lt;/code&gt; simply returns an iterator object. For lists we would normally just write &lt;code&gt;for x in alist&lt;/code&gt; to iterate over the list, but under the hood an iterator is defined with each loop fetching the next item using a &lt;code&gt;next&lt;/code&gt; call.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&#34;language-(python)&#34;&gt;&amp;gt;&amp;gt;&amp;gt; iter(k)
+&amp;lt;list_iterator object at 0x7fcf654c9f28&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;2&#34;&gt;
+&lt;li&gt;Next we consider &lt;code&gt;[iter(k)]*2&lt;/code&gt; - the multiplication here creates a shallow copy of the list.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&#34;language-(python)&#34;&gt;&amp;gt;&amp;gt;&amp;gt; [iter(k)] * 2
+[&amp;lt;list_iterator object at 0x7fcf654c9f28&amp;gt;, &amp;lt;list_iterator object at 0x7fcf654c9f28&amp;gt;]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;The star operator &lt;code&gt;*&lt;/code&gt; then unpacks the collection as positional arguments to a function which is &lt;code&gt;zip&lt;/code&gt; in this case. &lt;code&gt;zip&lt;/code&gt; is a handy tool to merge several iterable together.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&#34;language-(python)&#34;&gt;&amp;gt;&amp;gt;&amp;gt; zip(*[iter(k)] * 2)
+&amp;lt;zip object at 0x7fcf654de808&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;4&#34;&gt;
+&lt;li&gt;Finally, the &lt;code&gt;list&lt;/code&gt; operator just runs through to generate the entire list, giving us the desired output.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&#34;language-(python)&#34;&gt;&amp;gt;&amp;gt;&amp;gt; list(zip(*[iter(k)] * 2))
+[(1, 2), (3, 4), (5, 6)]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What&amp;rsquo;s strange about all this is that it depends on subtle behaviours of the underlying behaviour. For example, instead of &lt;code&gt;zip(*[iter(k)] * 2)&lt;/code&gt; you wrote &lt;code&gt;list(zip(*[iter(k), iter(k)]))&lt;/code&gt;. You will end up with a different result. The solution depends on the iterators being a shallow copy! Each time any of the iterator is hit, it calls the &lt;code&gt;next&lt;/code&gt; call to the function&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
