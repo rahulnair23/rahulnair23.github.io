@@ -29,7 +29,7 @@
 list(zip(*[iter(k)]*2))
 # [(1, 2), (3, 4), (5, 6)]
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This is a whole other level of python! And rather poor for the documentation to suggest it frankly. Let&amp;rsquo;s break it down to understand why this works.&lt;/p&gt;
+&lt;p&gt;That is cryptic! Let&amp;rsquo;s break it down to understand why this works.&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;Let&amp;rsquo;s start with the inner most bit. &lt;code&gt;iter&lt;/code&gt; simply returns an iterator object. For lists we would normally just write &lt;code&gt;for x in alist&lt;/code&gt; to iterate over the list, but under the hood an iterator is defined with each loop fetching the next item using a &lt;code&gt;next&lt;/code&gt; call.&lt;/li&gt;
 &lt;/ol&gt;
@@ -54,7 +54,9 @@ list(zip(*[iter(k)]*2))
 &lt;pre&gt;&lt;code class=&#34;language-(python)&#34;&gt;&amp;gt;&amp;gt;&amp;gt; list(zip(*[iter(k)] * 2))
 [(1, 2), (3, 4), (5, 6)]
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;What&amp;rsquo;s strange about all this is that it depends on subtle behaviours of the underlying behaviour. For example, instead of &lt;code&gt;zip(*[iter(k)] * 2)&lt;/code&gt; you wrote &lt;code&gt;list(zip(*[iter(k), iter(k)]))&lt;/code&gt;. You will end up with a different result. The solution depends on the iterators being a shallow copy! Each time any of the iterator is hit, it calls the &lt;code&gt;next&lt;/code&gt; call to the function&lt;/p&gt;
+&lt;p&gt;What&amp;rsquo;s strange about all this is that it depends on subtle behaviours of the underlying methods. For example, instead of &lt;code&gt;zip(*[iter(k)] * 2)&lt;/code&gt; you wrote &lt;code&gt;list(zip(*[iter(k), iter(k)]))&lt;/code&gt;. You will end up with a different result. The solution depends on the iterators being a shallow copy! Each time any of the iterator is hit, it calls the &lt;code&gt;next&lt;/code&gt; call to the function.&lt;/p&gt;
+&lt;h3 id=&#34;show-dont-tell&#34;&gt;Show, don&amp;rsquo;t tell&lt;/h3&gt;
+&lt;p&gt;I&amp;rsquo;d hate to encounter snippets like this in the wild as it places significant cognitive load on people trying to read this. Strange it was included in the official 2.x documentation, thankfully removed from the current versions.&lt;/p&gt;
 </description>
     </item>
     
