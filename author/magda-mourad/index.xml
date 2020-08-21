@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Magda Mourad | Rahul Nair</title>
+    <link>https://rahulnair23.github.io/author/magda-mourad/</link>
+      <atom:link href="https://rahulnair23.github.io/author/magda-mourad/index.xml" rel="self" type="application/rss+xml" />
+    <description>Magda Mourad</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 01 Jan 2014 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <title>Magda Mourad</title>
+      <link>https://rahulnair23.github.io/author/magda-mourad/</link>
+    </image>
+    
+    <item>
+      <title>Data as a resource: real-time predictive analytics for bus bunching</title>
+      <link>https://rahulnair23.github.io/publication/nair-2015-data/</link>
+      <pubDate>Wed, 01 Jan 2014 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/nair-2015-data/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>1 | Rahul Nair</title>
+    <link>https://rahulnair23.github.io/publication-type/1/</link>
+      <atom:link href="https://rahulnair23.github.io/publication-type/1/index.xml" rel="self" type="application/rss+xml" />
+    <description>1</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <title>1</title>
+      <link>https://rahulnair23.github.io/publication-type/1/</link>
+    </image>
+    
+    <item>
+      <title>Scenario-based XAI for Humanitarian Aid Forecasting</title>
+      <link>https://rahulnair23.github.io/publication/andres-2020-scenario/</link>
+      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/andres-2020-scenario/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>RSM: An Explainable Predictive Sales Route Selector</title>
+      <link>https://rahulnair23.github.io/publication/chen-2019-rsm/</link>
+      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/chen-2019-rsm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Towards Automated Extraction of Business Constraints from Unstructured Regulatory Text</title>
+      <link>https://rahulnair23.github.io/publication/nair-2018-towards/</link>
+      <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/nair-2018-towards/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Spillover detection for urban traffic networks using signal timing and stop line detector data</title>
+      <link>https://rahulnair23.github.io/publication/wang-2016-spillover/</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/wang-2016-spillover/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title> A multi-scale approach to data-driven mass migration analysis</title>
+      <link>https://rahulnair23.github.io/publication/mohammed-2016-multiscale/</link>
+      <pubDate>Fri, 01 Jan 2016 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/mohammed-2016-multiscale/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Characterization of network traffic processes under adaptive traffic control systems</title>
+      <link>https://rahulnair23.github.io/publication/pascale-2015-isttt/</link>
+      <pubDate>Thu, 01 Jan 2015 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/pascale-2015-isttt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Allaboard: visual exploration of cellphone mobility data to optimise public transport</title>
+      <link>https://rahulnair23.github.io/publication/sbodio-2014-allaboard/</link>
+      <pubDate>Wed, 01 Jan 2014 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/sbodio-2014-allaboard/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Data as a resource: real-time predictive analytics for bus bunching</title>
+      <link>https://rahulnair23.github.io/publication/nair-2015-data/</link>
+      <pubDate>Wed, 01 Jan 2014 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/nair-2015-data/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AllAboard: a system for exploring urban mobility and optimizing public transport using cellphone data</title>
+      <link>https://rahulnair23.github.io/publication/berlingerio-2013-allaboard/</link>
+      <pubDate>Tue, 01 Jan 2013 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/berlingerio-2013-allaboard/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>A Porous Flow Model for Disordered Heterogeneous Traffic Streams</title>
+      <link>https://rahulnair23.github.io/publication/nair-2012-porous/</link>
+      <pubDate>Sun, 01 Jan 2012 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/nair-2012-porous/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Missed connections: quantifying and optimizing multi-modal interconnectivity in cities</title>
+      <link>https://rahulnair23.github.io/publication/coffey-2012-missed/</link>
+      <pubDate>Sun, 01 Jan 2012 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/coffey-2012-missed/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Relation between Real-Time Data and Hourly Traffic Volume Taking Heavy Vehicles into Consideration</title>
+      <link>https://rahulnair23.github.io/publication/sadrsadat-2012-relation/</link>
+      <pubDate>Sun, 01 Jan 2012 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/sadrsadat-2012-relation/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>A porous flow approach to modeling heterogeneous traffic in disordered systems</title>
+      <link>https://rahulnair23.github.io/publication/nair-2011-isttt/</link>
+      <pubDate>Sat, 01 Jan 2011 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/nair-2011-isttt/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Dynamic Relocation of Scarce Resources: The Case of Emergency Medical Service Vehicles in Montreal</title>
+      <link>https://rahulnair23.github.io/publication/nair-2008-dynamic/</link>
+      <pubDate>Tue, 01 Jan 2008 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/nair-2008-dynamic/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Application of floating car data using GIS for dynamic vehicular routing: A case study</title>
+      <link>https://rahulnair23.github.io/publication/nair-2004/</link>
+      <pubDate>Thu, 01 Jan 2004 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/nair-2004/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

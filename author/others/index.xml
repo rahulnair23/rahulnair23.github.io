@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title> others | Rahul Nair</title>
+    <link>https://rahulnair23.github.io/author/others/</link>
+      <atom:link href="https://rahulnair23.github.io/author/others/index.xml" rel="self" type="application/rss+xml" />
+    <description> others</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 01 Jan 2014 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <title> others</title>
+      <link>https://rahulnair23.github.io/author/others/</link>
+    </image>
+    
+    <item>
+      <title>Allaboard: visual exploration of cellphone mobility data to optimise public transport</title>
+      <link>https://rahulnair23.github.io/publication/sbodio-2014-allaboard/</link>
+      <pubDate>Wed, 01 Jan 2014 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/sbodio-2014-allaboard/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Modelling corridor freight transport for demonstration of seamless international rail freight services</title>
+      <link>https://rahulnair23.github.io/publication/arcot-2007-modelling/</link>
+      <pubDate>Mon, 01 Jan 2007 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/arcot-2007-modelling/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

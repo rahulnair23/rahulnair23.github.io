@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Cathal Coffey | Rahul Nair</title>
+    <link>https://rahulnair23.github.io/author/cathal-coffey/</link>
+      <atom:link href="https://rahulnair23.github.io/author/cathal-coffey/index.xml" rel="self" type="application/rss+xml" />
+    <description>Cathal Coffey</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 01 Jan 2013 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <title>Cathal Coffey</title>
+      <link>https://rahulnair23.github.io/author/cathal-coffey/</link>
+    </image>
+    
+    <item>
+      <title>Large-scale transit schedule coordination based on journey planner requests</title>
+      <link>https://rahulnair23.github.io/publication/nair-2013-trb/</link>
+      <pubDate>Tue, 01 Jan 2013 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/nair-2013-trb/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Missed connections: quantifying and optimizing multi-modal interconnectivity in cities</title>
+      <link>https://rahulnair23.github.io/publication/coffey-2012-missed/</link>
+      <pubDate>Sun, 01 Jan 2012 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/coffey-2012-missed/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

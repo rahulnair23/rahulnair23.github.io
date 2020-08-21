@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Anton Dekusar | Rahul Nair</title>
+    <link>https://rahulnair23.github.io/author/anton-dekusar/</link>
+      <atom:link href="https://rahulnair23.github.io/author/anton-dekusar/index.xml" rel="self" type="application/rss+xml" />
+    <description>Anton Dekusar</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <title>Anton Dekusar</title>
+      <link>https://rahulnair23.github.io/author/anton-dekusar/</link>
+    </image>
+    
+    <item>
+      <title>Keep it simple stupid! A non-parametric kernel regression approach to forecast travel speeds</title>
+      <link>https://rahulnair23.github.io/publication/nair-2020-keep/</link>
+      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/nair-2020-keep/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

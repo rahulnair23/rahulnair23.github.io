@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Kevin Denny | Rahul Nair</title>
+    <link>https://rahulnair23.github.io/author/kevin-denny/</link>
+      <atom:link href="https://rahulnair23.github.io/author/kevin-denny/index.xml" rel="self" type="application/rss+xml" />
+    <description>Kevin Denny</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 01 Jan 2013 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <title>Kevin Denny</title>
+      <link>https://rahulnair23.github.io/author/kevin-denny/</link>
+    </image>
+    
+    <item>
+      <title>Robust Dynamic Distribution of Security Assets in Transit Systems</title>
+      <link>https://rahulnair23.github.io/publication/nair-2013-robust/</link>
+      <pubDate>Tue, 01 Jan 2013 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/nair-2013-robust/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
