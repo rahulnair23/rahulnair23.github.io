@@ -5,12 +5,39 @@
     <link>https://rahulnair23.github.io/</link>
       <atom:link href="https://rahulnair23.github.io/index.xml" rel="self" type="application/rss+xml" />
     <description>Rahul Nair</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 30 Apr 2021 13:26:35 +0100</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 26 Oct 2021 14:14:05 +0100</lastBuildDate>
     <image>
       <url>https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Rahul Nair</title>
       <link>https://rahulnair23.github.io/</link>
     </image>
+    
+    <item>
+      <title>Prospective Explanations</title>
+      <link>https://rahulnair23.github.io/post/prospective-explanations/</link>
+      <pubDate>Tue, 26 Oct 2021 14:14:05 +0100</pubDate>
+      <guid>https://rahulnair23.github.io/post/prospective-explanations/</guid>
+      <description>&lt;p&gt;At NeurIPS 2021 this year, Pierpaolo Tomassi and I have a demonstrator that brings together a few ideas on surrogates, bayesian networks, and model understanding. The 
+&lt;a href=&#34;https://prosp-exp.eu-gb.mybluemix.net/ui/explorer/index.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;system&lt;/a&gt; (while its still up!) shows one view on &lt;em&gt;prospective&lt;/em&gt; explanations, one when requires some effort from users to build a mental model of ML model by probing interactively.&lt;/p&gt;
+&lt;p&gt;The system is designed for regression and classification tasks with structured data. Prospective explanations are aimed at showing how models work by highlighting likely changes in model outcomes under changes in input (
+&lt;a href=&#34;https://dl.acm.org/doi/10.1145/3419764&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Shneiderman 2020&lt;/a&gt;). This in contrast to most post-hoc explanability methods, that aim to provide a justification for a decision retrospectively. A desired property of explanations is to help with creating the right mental model of an AI system. The right mental model leads to greater trust (
+&lt;a href=&#34;https://doi.org/10.1609/aaai.v33i01.33012429&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Bansal et al., 2019&lt;/a&gt;). Interactive systems that allow for exploration have been shown to improve user comprehension (
+&lt;a href=&#34;https://dl.acm.org/doi/10.1145/3290605.3300789&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Chen et al., 2019&lt;/a&gt;) albeit being more time consuming.&lt;/p&gt;
+&lt;p&gt;Our system is designed to provide fast estimates of changes in outcomes for any arbitrary exploratory query from users. Such queries are typical partial, i.e. involve only a selected number of features, the outcomes labels are shown therefore as likelihoods. Repeated queries can therefore indicate which aspects of the feature space are more likely to influence the target variable.&lt;/p&gt;
+&lt;p&gt;To achieve fast interactive exploration, we build a surrogate Bayesian network model. A surrogate here implies the use of model labels instead of ground truth labels to represent model behaviour. Bayesian network models are stored as directed acyclic graphs where links represent dependence between variables. This graph representation can be learnt directly from the data through a structure learning task, or be provided externally and only conditional probabilities estimated from the data. Bayesian networks are efficient in storing the joint distribution over feature sets and allow for fast inference over arbitrary queries.&lt;/p&gt;
+&lt;p&gt;Specifically, we seek to explain a model $f$ that maps an input vector $\mathbf{x}_i$ to an output $y_i$. Consider a validation dataset $D$, a set of $(\mathbf{x}_i, y_i)$ observations for $i=1,&amp;hellip;,n$. For this validation data, we generate a set of labels $\hat{y}_i = f(\mathbf{x}_i)$. A structure learning algorithm is used, treating both features $\mathbf{x}_i$ and labels $\hat{y}_i$ as random variables to learn a graph $G(V, E)$ and associated probability tables. During inference, users provide arbitrary feature values, and the marginal distribution of the target class estimated using the formula&lt;/p&gt;
+&lt;p&gt;$$P(x_1 = a_1, x_2 = a_2, &amp;hellip;, x_k=a_k,y=y_1) = \prod_{v=1}^{n} P(x_v=a_v| x_j = a_j , j\in pa(v))$$&lt;/p&gt;
+&lt;p&gt;where $pa(v)$ denotes all parents of a node $v$ in $G$. While inference in Bayesian networks is NP-Hard, assumptions on the structure of $G$ admits fast inference in practice. We experimented with four strategies in particular. First, the network structure was defined &lt;em&gt;a priori&lt;/em&gt; from expert opinion leading to a lower node degree. Second, we experimented with limiting the number of parents for each node. Third, we learnt the structure on a limited set of important features as determined by feature important scores. Lastly, the network is training on a subset of features used in $f$. In our experiments, these approaches did not degrade performance of the surrogate model substantively.&lt;/p&gt;
+&lt;p&gt;The main advantages of our approach are that (a) inference in most practical cases is very fast and supports real-time feedback allowing for interactivity, (b) inference can be done with partial information on features, and (c) any indirect effects are also considered in estimating target class distributions. Regression models involve an additional consideration. The target variable $\hat{y}_i$ is discretized before learning the structure. This is necessary to avoid the difficulty of perceiving changes in continuous probability distributions.&lt;/p&gt;
+&lt;p&gt;The system provides two views. The first, a feature board showing all relevant features with clickable values that formulate queries. These are clustered by theme. Any selection results in updates to marginal distributions for all other variables.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;table.png&#34; alt=&#34;Feature board&#34;&gt;&lt;/p&gt;
+&lt;p&gt;The second view is the learnt Bayesian network itself.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;graph.png&#34; alt=&#34;Network&#34;&gt;&lt;/p&gt;
+&lt;p&gt;We have deployed the system for several health and social care domains. Here we demonstrate it for a humanitarian application that deals with forced displacement. We explain two model classes for two tasks, one classification and one regression. Forced displacement refers to the involuntary movement of people away from their homes. This sector is highly complex, and a wide range of factors can potentially influence the onset and severity of displacement crisis. Responding organizations have to plan under high uncertainty on the type of humanitarian need. Previous user-studies for this sector has uncovered the need to surface this uncertainty (
+&lt;a href=&#34;https://dl.acm.org/doi/abs/10.1145/3334480.3382903&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Andres et al., 2020&lt;/a&gt;) which is both aleatory (uncertainty due to things that cannot be predicted) and epistemic (uncertainty due to missing information).&lt;/p&gt;
+&lt;p&gt;While the regression task is to forecast volume of displaced persons, the classification task seeks to classify if the volume is likely to exceed a &amp;ldquo;crisis&amp;rdquo; threshold (the UNHCR informally deems a crisis when displacement volumes are in excess of 75,000 persons). For each task, prospective explanations of two models each that are training on data from a period from 1980 through 2015. Data after 2015 is used for the validation set $D$. For classification, a logistic regression with validation accuracy (acc) 97.2% and a gradient boosted classifier (acc: 98.03%) are shown. Both models exhibit poor precision for the minority class. Compared to ground truth reference, the models are less likely to predict a crisis. For regression we show a linear regression (MAE: 2086.03) and a gradient boosted regressor (MAE: 1155.69). For the latter, baseline performance (overestimates for 100-5000 ranges, and underestimates for $&amp;gt;5000$) can be seen. When uses toggle the human rights dimension to `worse&amp;rsquo;, predictions for &amp;gt;5000 better match ground truth labels. While this estimator is highly non-linear,  the impact of influencing factors can be understood by interacting with features values and visual representation of outcome marginals.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Partitioning a set</title>
@@ -149,6 +176,70 @@ Partition: &#39;abcdefghijklmnopqrstuvwxyz&#39; with cost: 1.0.
 &lt;p&gt;The number of possible partitions of a set is known as the 
 &lt;a href=&#34;https://en.wikipedia.org/wiki/Bell_number&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Bell number&lt;/a&gt;. For the 26 alphabet, the total number of possible partitions is very large (&lt;code&gt;49631246523618756274&lt;/code&gt; as per &lt;code&gt;sympy.bell&lt;/code&gt; in Python). In this example the procedure evaluated 175 partitions before arriving at the optimal one.&lt;/p&gt;
 </description>
+    </item>
+    
+    <item>
+      <title>Zero-Suppressed Decision Diagrams and Independent Sets</title>
+      <link>https://rahulnair23.github.io/post/decision-diagrams/</link>
+      <pubDate>Tue, 26 Jan 2021 13:16:32 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/post/decision-diagrams/</guid>
+      <description>&lt;p&gt;I stumbled across Binary Decision Diagrams (BDDs) by chance. They are an efficient data structure to represent sets of graphs. While a graph $G$ is a set of vertices $V$ along with a set of edges $E$ that connect the vertices, a graph set is a collection of subgraphs over the universe $V$. For example, a collection of feasible paths on $G$ would be a graph set. For a graph, if one has its corresponding BDD, specific types of queries can be handled with remarkable efficiency. See the 
+&lt;a href=&#34;https://youtu.be/Q4gTV4r0zRs&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;this&lt;/a&gt; video from the creators of 
+&lt;a href=&#34;https://github.com/takemaru/graphillion&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;grahillion&lt;/a&gt; for an illustration of count queries. Knuth&amp;rsquo;s Art of Programming has an entire chapter devoted to this, but it hasn&amp;rsquo;t seen too many uses in the operations research community (at least as far as I&amp;rsquo;m aware). It seems like it could be pretty useful for several combinatorial optimization problems.&lt;/p&gt;
+&lt;p&gt;So in this post, we&amp;rsquo;ll work through one use - that of finding maximal independent sets in a graph. An independent set is a subset of vertices $V$, no two of which are adjacent. A &lt;em&gt;maximal&lt;/em&gt; independent set is one where no additional nodes can be included and remain as an independent set. Not to be confused with the maxim&lt;strong&gt;um&lt;/strong&gt; set - which looks for an independent set with maximum weight.&lt;/p&gt;
+&lt;p&gt;We follow the work described in 
+&lt;a href=&#34;https://doi.org/10.1007/s10878-014-9722-4&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Morrison et al. (2014)&lt;/a&gt; on this problem which uses a Zero-suppressed Decision Diagram (ZDD), a variant of BDD where the false conditions are omitted. This is useful when the feasible solutions are sparse. There are several works that look into using ZDDs on graph and optimization problems, e.g. maximal cliques 
+&lt;a href=&#34;https://doi.org/10.1109/EDTC.1997.582363&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;(Coudert, 1997)&lt;/a&gt; and 
+&lt;a href=&#34;http://people.mpi-inf.mpg.de/alumni/d1/2019/behle/azove.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;0/1 enumeration&lt;/a&gt;.&lt;/p&gt;
+&lt;h1 id=&#34;zdds&#34;&gt;ZDDs&lt;/h1&gt;
+&lt;p&gt;In addition to a graph $G$, we also need a vertex ordering. While the ordering can be arbitrary, it does have an impact on the resulting ZDD. Each node in the ZDD, $Z_s$ is defined by a tuple $(v, lo, hi)$, where $v$ is the vertex it refers to in $G$ and $lo, hi$ are exactly two branches, known as the low and high branch, pointers to other nodes in the ZDD. These can be thought of as binary outcomes of the node from which they emanate. The terminal nodes in the ZDD have special meaning. The $\top$ refers to a &lt;strong&gt;true&lt;/strong&gt; outcome, while $\bot$ encodes a &lt;strong&gt;false&lt;/strong&gt; outcome.&lt;/p&gt;
+&lt;p&gt;All this becomes clearer in the example, taken from Morrison&amp;rsquo;s paper, below. The 5-node graph on the left has a corresponding ZDD on the right that encodes all possible maximal independent sets. The solid arrows are high branches, while the dashed ones are low branches.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;fig.svg&#34; alt=&#34;Alt&#34;&gt;&lt;/p&gt;
+&lt;p&gt;This Directed Acyclic Graph (DAG) encodes every possible maximal independent set. Every feasible path from the root node till the terminal node $\top$ represents a maximal independent set. The set it represented by nodes that have high branches coming out. For example, feasible path $v_1, v_2, v_3, v_4,\top$ represents an maximal independent set ${v_2, v_4}$ as these are the only nodes with solid (high) branches. There are several important properties of the ZDD that I skip here, like the uniqueness of nodes in $Z_s$, each node is encountered only once, etc.&lt;/p&gt;
+&lt;p&gt;The ZDD can now be used to enumerate all maximal independent sets and support non-trivial operations that would be expensive otherwise, e.g. a count of all maximal independent sets without listing each one. There are other advantages as well. For instance, if there is a need to repeatedly query this ZDD, for example when node weights change, then one can compute this efficiently. Mostly, ZDD offer a compact representation of the underlying set.&lt;/p&gt;
+&lt;h1 id=&#34;constructing-a-zdd&#34;&gt;Constructing a ZDD&lt;/h1&gt;
+&lt;p&gt;To do all of this, the ZDD needs to be constructed first. There are few methods to do this for each class of problem you want to solve. 
+&lt;a href=&#34;https://doi.org/10.1007/s10878-014-9722-4&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Morrison et al. (2014)&lt;/a&gt;, for example, tackle the case of the maximal independent set.&lt;/p&gt;
+&lt;p&gt;In this case, they describe an algorithm that takes as input a graph and a vertex ordering (this ordering can be arbitrary - but does have an influence on the size of the ZDD). The procedure is recursive, and it each iteration a single node is considered. It first considers if a maximal set can be constructed from the remaining vertices. Remaining here are w.r.t. to the ordering. It also checks if the set is already maximal. For these two cases, the procedure returns with the terminal nodes, i.e. $\bot$ or $\top$. If these conditions are not met, it creates two branches for the current node based on the next undominated node. A new node is added if it hasn&amp;rsquo;t previously been created.&lt;/p&gt;
+&lt;h1 id=&#34;reference-implementation&#34;&gt;Reference implementation&lt;/h1&gt;
+&lt;p&gt;A reference implementation is forthcoming (when time permits!).&lt;/p&gt;
+&lt;p&gt;There are existing packages like 
+&lt;a href=&#34;https://github.com/takemaru/graphillion&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;graphmillion&lt;/a&gt; that provide powerful abstractions for common problem classes. See also their accompanying 
+&lt;a href=&#34;https://doi.org/10.1007/s10009-014-0352-z&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;paper&lt;/a&gt;. 
+&lt;a href=&#34;http://people.mpi-inf.mpg.de/alumni/d1/2019/behle/azove.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Azove&lt;/a&gt; is another tool (uses binary decision diagrams) for vertex enumeration that may be of interest as well.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Artificial intelligence indocyanine green (ICG) perfusion for colorectal cancer intra-operative tissue classification</title>
+      <link>https://rahulnair23.github.io/publication/cahill-2021-artificial/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/cahill-2021-artificial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Robust transit line planning based on demand estimates obtained from mobile phones</title>
+      <link>https://rahulnair23.github.io/publication/lee-2021-robust/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/lee-2021-robust/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>User Driven Model Adjustment via Boolean Rule Explanations</title>
+      <link>https://rahulnair23.github.io/publication/daly-2021-user/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/daly-2021-user/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>What Changed? Interpretable Model Comparison</title>
+      <link>https://rahulnair23.github.io/publication/nair-2021-changed/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/nair-2021-changed/</guid>
+      <description></description>
     </item>
     
     <item>

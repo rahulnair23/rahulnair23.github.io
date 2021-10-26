@@ -152,6 +152,38 @@ Partition: &#39;abcdefghijklmnopqrstuvwxyz&#39; with cost: 1.0.
     </item>
     
     <item>
+      <title>Zero-Suppressed Decision Diagrams and Independent Sets</title>
+      <link>https://rahulnair23.github.io/post/decision-diagrams/</link>
+      <pubDate>Tue, 26 Jan 2021 13:16:32 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/post/decision-diagrams/</guid>
+      <description>&lt;p&gt;I stumbled across Binary Decision Diagrams (BDDs) by chance. They are an efficient data structure to represent sets of graphs. While a graph $G$ is a set of vertices $V$ along with a set of edges $E$ that connect the vertices, a graph set is a collection of subgraphs over the universe $V$. For example, a collection of feasible paths on $G$ would be a graph set. For a graph, if one has its corresponding BDD, specific types of queries can be handled with remarkable efficiency. See the 
+&lt;a href=&#34;https://youtu.be/Q4gTV4r0zRs&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;this&lt;/a&gt; video from the creators of 
+&lt;a href=&#34;https://github.com/takemaru/graphillion&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;grahillion&lt;/a&gt; for an illustration of count queries. Knuth&amp;rsquo;s Art of Programming has an entire chapter devoted to this, but it hasn&amp;rsquo;t seen too many uses in the operations research community (at least as far as I&amp;rsquo;m aware). It seems like it could be pretty useful for several combinatorial optimization problems.&lt;/p&gt;
+&lt;p&gt;So in this post, we&amp;rsquo;ll work through one use - that of finding maximal independent sets in a graph. An independent set is a subset of vertices $V$, no two of which are adjacent. A &lt;em&gt;maximal&lt;/em&gt; independent set is one where no additional nodes can be included and remain as an independent set. Not to be confused with the maxim&lt;strong&gt;um&lt;/strong&gt; set - which looks for an independent set with maximum weight.&lt;/p&gt;
+&lt;p&gt;We follow the work described in 
+&lt;a href=&#34;https://doi.org/10.1007/s10878-014-9722-4&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Morrison et al. (2014)&lt;/a&gt; on this problem which uses a Zero-suppressed Decision Diagram (ZDD), a variant of BDD where the false conditions are omitted. This is useful when the feasible solutions are sparse. There are several works that look into using ZDDs on graph and optimization problems, e.g. maximal cliques 
+&lt;a href=&#34;https://doi.org/10.1109/EDTC.1997.582363&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;(Coudert, 1997)&lt;/a&gt; and 
+&lt;a href=&#34;http://people.mpi-inf.mpg.de/alumni/d1/2019/behle/azove.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;0/1 enumeration&lt;/a&gt;.&lt;/p&gt;
+&lt;h1 id=&#34;zdds&#34;&gt;ZDDs&lt;/h1&gt;
+&lt;p&gt;In addition to a graph $G$, we also need a vertex ordering. While the ordering can be arbitrary, it does have an impact on the resulting ZDD. Each node in the ZDD, $Z_s$ is defined by a tuple $(v, lo, hi)$, where $v$ is the vertex it refers to in $G$ and $lo, hi$ are exactly two branches, known as the low and high branch, pointers to other nodes in the ZDD. These can be thought of as binary outcomes of the node from which they emanate. The terminal nodes in the ZDD have special meaning. The $\top$ refers to a &lt;strong&gt;true&lt;/strong&gt; outcome, while $\bot$ encodes a &lt;strong&gt;false&lt;/strong&gt; outcome.&lt;/p&gt;
+&lt;p&gt;All this becomes clearer in the example, taken from Morrison&amp;rsquo;s paper, below. The 5-node graph on the left has a corresponding ZDD on the right that encodes all possible maximal independent sets. The solid arrows are high branches, while the dashed ones are low branches.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;fig.svg&#34; alt=&#34;Alt&#34;&gt;&lt;/p&gt;
+&lt;p&gt;This Directed Acyclic Graph (DAG) encodes every possible maximal independent set. Every feasible path from the root node till the terminal node $\top$ represents a maximal independent set. The set it represented by nodes that have high branches coming out. For example, feasible path $v_1, v_2, v_3, v_4,\top$ represents an maximal independent set ${v_2, v_4}$ as these are the only nodes with solid (high) branches. There are several important properties of the ZDD that I skip here, like the uniqueness of nodes in $Z_s$, each node is encountered only once, etc.&lt;/p&gt;
+&lt;p&gt;The ZDD can now be used to enumerate all maximal independent sets and support non-trivial operations that would be expensive otherwise, e.g. a count of all maximal independent sets without listing each one. There are other advantages as well. For instance, if there is a need to repeatedly query this ZDD, for example when node weights change, then one can compute this efficiently. Mostly, ZDD offer a compact representation of the underlying set.&lt;/p&gt;
+&lt;h1 id=&#34;constructing-a-zdd&#34;&gt;Constructing a ZDD&lt;/h1&gt;
+&lt;p&gt;To do all of this, the ZDD needs to be constructed first. There are few methods to do this for each class of problem you want to solve. 
+&lt;a href=&#34;https://doi.org/10.1007/s10878-014-9722-4&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Morrison et al. (2014)&lt;/a&gt;, for example, tackle the case of the maximal independent set.&lt;/p&gt;
+&lt;p&gt;In this case, they describe an algorithm that takes as input a graph and a vertex ordering (this ordering can be arbitrary - but does have an influence on the size of the ZDD). The procedure is recursive, and it each iteration a single node is considered. It first considers if a maximal set can be constructed from the remaining vertices. Remaining here are w.r.t. to the ordering. It also checks if the set is already maximal. For these two cases, the procedure returns with the terminal nodes, i.e. $\bot$ or $\top$. If these conditions are not met, it creates two branches for the current node based on the next undominated node. A new node is added if it hasn&amp;rsquo;t previously been created.&lt;/p&gt;
+&lt;h1 id=&#34;reference-implementation&#34;&gt;Reference implementation&lt;/h1&gt;
+&lt;p&gt;A reference implementation is forthcoming (when time permits!).&lt;/p&gt;
+&lt;p&gt;There are existing packages like 
+&lt;a href=&#34;https://github.com/takemaru/graphillion&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;graphmillion&lt;/a&gt; that provide powerful abstractions for common problem classes. See also their accompanying 
+&lt;a href=&#34;https://doi.org/10.1007/s10009-014-0352-z&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;paper&lt;/a&gt;. 
+&lt;a href=&#34;http://people.mpi-inf.mpg.de/alumni/d1/2019/behle/azove.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Azove&lt;/a&gt; is another tool (uses binary decision diagrams) for vertex enumeration that may be of interest as well.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Maximum weighted cliques in a graph</title>
       <link>https://rahulnair23.github.io/post/max-clique/</link>
       <pubDate>Fri, 05 Jun 2020 10:44:59 +0100</pubDate>

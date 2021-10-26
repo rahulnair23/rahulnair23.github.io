@@ -5,12 +5,220 @@
     <link>https://rahulnair23.github.io/author/rahul-nair/</link>
       <atom:link href="https://rahulnair23.github.io/author/rahul-nair/index.xml" rel="self" type="application/rss+xml" />
     <description>Rahul Nair</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 01 Jan 2021 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>https://rahulnair23.github.io/author/rahul-nair/avatar_hu1beb5417ffad9c8705e9858d9764b531_15417_270x270_fill_q90_lanczos_center.jpg</url>
+      <url>https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Rahul Nair</title>
       <link>https://rahulnair23.github.io/author/rahul-nair/</link>
     </image>
+    
+    <item>
+      <title>Robust transit line planning based on demand estimates obtained from mobile phones</title>
+      <link>https://rahulnair23.github.io/publication/lee-2021-robust/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/lee-2021-robust/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>User Driven Model Adjustment via Boolean Rule Explanations</title>
+      <link>https://rahulnair23.github.io/publication/daly-2021-user/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/daly-2021-user/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>What Changed? Interpretable Model Comparison</title>
+      <link>https://rahulnair23.github.io/publication/nair-2021-changed/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/nair-2021-changed/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Perfusion Quantification from Endoscopic Videos: Learning to Read Tumor Signatures</title>
+      <link>https://rahulnair23.github.io/publication/zhuk-2020-perfusion/</link>
+      <pubDate>Wed, 01 Apr 2020 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/zhuk-2020-perfusion/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Scenario-based XAI for Humanitarian Aid Forecasting</title>
+      <link>https://rahulnair23.github.io/publication/andres-2020-scenario/</link>
+      <pubDate>Wed, 01 Apr 2020 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/andres-2020-scenario/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Keep it simple stupid! A non-parametric kernel regression approach to forecast travel speeds</title>
+      <link>https://rahulnair23.github.io/publication/nair-2020-keep/</link>
+      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/nair-2020-keep/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>RSM: An Explainable Predictive Sales Route Selector</title>
+      <link>https://rahulnair23.github.io/publication/chen-2019-rsm/</link>
+      <pubDate>Fri, 08 Nov 2019 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/chen-2019-rsm/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>A machine learning approach to scenario analysis and forecasting of mixed migration</title>
+      <link>https://rahulnair23.github.io/publication/nair-2019-machine/</link>
+      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/nair-2019-machine/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>An ensemble prediction model for train delays</title>
+      <link>https://rahulnair23.github.io/publication/nair-2019-ensemble/</link>
+      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/nair-2019-ensemble/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Towards Automated Extraction of Business Constraints from Unstructured Regulatory Text</title>
+      <link>https://rahulnair23.github.io/publication/nair-2018-towards/</link>
+      <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/nair-2018-towards/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>A predictive-control framework to address bus bunching</title>
+      <link>https://rahulnair23.github.io/publication/andres-2017-predictive/</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/andres-2017-predictive/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Spillover detection for urban traffic networks using signal timing and stop line detector data</title>
+      <link>https://rahulnair23.github.io/publication/wang-2016-spillover/</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/wang-2016-spillover/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title> A multi-scale approach to data-driven mass migration analysis</title>
+      <link>https://rahulnair23.github.io/publication/mohammed-2016-multiscale/</link>
+      <pubDate>Fri, 01 Jan 2016 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/mohammed-2016-multiscale/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Allaboard: visual exploration of cellphone mobility data to optimise public transport</title>
+      <link>https://rahulnair23.github.io/publication/di-2016-allaboard/</link>
+      <pubDate>Fri, 01 Jan 2016 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/di-2016-allaboard/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Data-Driven Transit Network Design From Mobile Phone Trajectories</title>
+      <link>https://rahulnair23.github.io/publication/pinelli-2016-data/</link>
+      <pubDate>Fri, 01 Jan 2016 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/pinelli-2016-data/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Optimizing dial-a-ride services in Maryland: Benefits of computerized routing and scheduling</title>
+      <link>https://rahulnair23.github.io/publication/markovic-2015-optimizing/</link>
+      <pubDate>Thu, 01 Jan 2015 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/markovic-2015-optimizing/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Allaboard: visual exploration of cellphone mobility data to optimise public transport</title>
+      <link>https://rahulnair23.github.io/publication/sbodio-2014-allaboard/</link>
+      <pubDate>Wed, 01 Jan 2014 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/sbodio-2014-allaboard/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Data as a resource: real-time predictive analytics for bus bunching</title>
+      <link>https://rahulnair23.github.io/publication/nair-2015-data/</link>
+      <pubDate>Wed, 01 Jan 2014 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/nair-2015-data/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Equilibrium design of bicycle sharing systems: the case of Washington D.C.</title>
+      <link>https://rahulnair23.github.io/publication/nair-2014-equ-dc/</link>
+      <pubDate>Wed, 01 Jan 2014 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/nair-2014-equ-dc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Equilibrium network design of shared-vehicle systems</title>
+      <link>https://rahulnair23.github.io/publication/nair-2014-equilibrium/</link>
+      <pubDate>Wed, 01 Jan 2014 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/nair-2014-equilibrium/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Semantic Traffic Diagnosis with STAR-CITY: Architecture and Lessons Learned from Deployment in Dublin, Bologna, Miami and Rio</title>
+      <link>https://rahulnair23.github.io/publication/lecue-2014-semantic/</link>
+      <pubDate>Wed, 01 Jan 2014 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/lecue-2014-semantic/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>AllAboard: a system for exploring urban mobility and optimizing public transport using cellphone data</title>
+      <link>https://rahulnair23.github.io/publication/berlingerio-2013-allaboard/</link>
+      <pubDate>Tue, 01 Jan 2013 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/berlingerio-2013-allaboard/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Large-scale transit schedule coordination based on journey planner requests</title>
+      <link>https://rahulnair23.github.io/publication/nair-2013-trb/</link>
+      <pubDate>Tue, 01 Jan 2013 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/nair-2013-trb/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Robust Dynamic Distribution of Security Assets in Transit Systems</title>
+      <link>https://rahulnair23.github.io/publication/nair-2013-robust/</link>
+      <pubDate>Tue, 01 Jan 2013 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/nair-2013-robust/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Missed connections: quantifying and optimizing multi-modal interconnectivity in cities</title>
+      <link>https://rahulnair23.github.io/publication/coffey-2012-missed/</link>
+      <pubDate>Sun, 01 Jan 2012 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/coffey-2012-missed/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>A porous flow approach to modeling heterogeneous traffic in disordered systems</title>
+      <link>https://rahulnair23.github.io/publication/nair-2011-porous/</link>
+      <pubDate>Sat, 01 Jan 2011 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/nair-2011-porous/</guid>
+      <description></description>
+    </item>
     
   </channel>
 </rss>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>XAI | Rahul Nair</title>
+    <link>https://rahulnair23.github.io/category/xai/</link>
+      <atom:link href="https://rahulnair23.github.io/category/xai/index.xml" rel="self" type="application/rss+xml" />
+    <description>XAI</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 26 Oct 2021 14:14:05 +0100</lastBuildDate>
+    <image>
+      <url>https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <title>XAI</title>
+      <link>https://rahulnair23.github.io/category/xai/</link>
+    </image>
+    
+    <item>
+      <title>Prospective Explanations</title>
+      <link>https://rahulnair23.github.io/post/prospective-explanations/</link>
+      <pubDate>Tue, 26 Oct 2021 14:14:05 +0100</pubDate>
+      <guid>https://rahulnair23.github.io/post/prospective-explanations/</guid>
+      <description>&lt;p&gt;At NeurIPS 2021 this year, Pierpaolo Tomassi and I have a demonstrator that brings together a few ideas on surrogates, bayesian networks, and model understanding. The 
+&lt;a href=&#34;https://prosp-exp.eu-gb.mybluemix.net/ui/explorer/index.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;system&lt;/a&gt; (while its still up!) shows one view on &lt;em&gt;prospective&lt;/em&gt; explanations, one when requires some effort from users to build a mental model of ML model by probing interactively.&lt;/p&gt;
+&lt;p&gt;The system is designed for regression and classification tasks with structured data. Prospective explanations are aimed at showing how models work by highlighting likely changes in model outcomes under changes in input (
+&lt;a href=&#34;https://dl.acm.org/doi/10.1145/3419764&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Shneiderman 2020&lt;/a&gt;). This in contrast to most post-hoc explanability methods, that aim to provide a justification for a decision retrospectively. A desired property of explanations is to help with creating the right mental model of an AI system. The right mental model leads to greater trust (
+&lt;a href=&#34;https://doi.org/10.1609/aaai.v33i01.33012429&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Bansal et al., 2019&lt;/a&gt;). Interactive systems that allow for exploration have been shown to improve user comprehension (
+&lt;a href=&#34;https://dl.acm.org/doi/10.1145/3290605.3300789&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Chen et al., 2019&lt;/a&gt;) albeit being more time consuming.&lt;/p&gt;
+&lt;p&gt;Our system is designed to provide fast estimates of changes in outcomes for any arbitrary exploratory query from users. Such queries are typical partial, i.e. involve only a selected number of features, the outcomes labels are shown therefore as likelihoods. Repeated queries can therefore indicate which aspects of the feature space are more likely to influence the target variable.&lt;/p&gt;
+&lt;p&gt;To achieve fast interactive exploration, we build a surrogate Bayesian network model. A surrogate here implies the use of model labels instead of ground truth labels to represent model behaviour. Bayesian network models are stored as directed acyclic graphs where links represent dependence between variables. This graph representation can be learnt directly from the data through a structure learning task, or be provided externally and only conditional probabilities estimated from the data. Bayesian networks are efficient in storing the joint distribution over feature sets and allow for fast inference over arbitrary queries.&lt;/p&gt;
+&lt;p&gt;Specifically, we seek to explain a model $f$ that maps an input vector $\mathbf{x}_i$ to an output $y_i$. Consider a validation dataset $D$, a set of $(\mathbf{x}_i, y_i)$ observations for $i=1,&amp;hellip;,n$. For this validation data, we generate a set of labels $\hat{y}_i = f(\mathbf{x}_i)$. A structure learning algorithm is used, treating both features $\mathbf{x}_i$ and labels $\hat{y}_i$ as random variables to learn a graph $G(V, E)$ and associated probability tables. During inference, users provide arbitrary feature values, and the marginal distribution of the target class estimated using the formula&lt;/p&gt;
+&lt;p&gt;$$P(x_1 = a_1, x_2 = a_2, &amp;hellip;, x_k=a_k,y=y_1) = \prod_{v=1}^{n} P(x_v=a_v| x_j = a_j , j\in pa(v))$$&lt;/p&gt;
+&lt;p&gt;where $pa(v)$ denotes all parents of a node $v$ in $G$. While inference in Bayesian networks is NP-Hard, assumptions on the structure of $G$ admits fast inference in practice. We experimented with four strategies in particular. First, the network structure was defined &lt;em&gt;a priori&lt;/em&gt; from expert opinion leading to a lower node degree. Second, we experimented with limiting the number of parents for each node. Third, we learnt the structure on a limited set of important features as determined by feature important scores. Lastly, the network is training on a subset of features used in $f$. In our experiments, these approaches did not degrade performance of the surrogate model substantively.&lt;/p&gt;
+&lt;p&gt;The main advantages of our approach are that (a) inference in most practical cases is very fast and supports real-time feedback allowing for interactivity, (b) inference can be done with partial information on features, and (c) any indirect effects are also considered in estimating target class distributions. Regression models involve an additional consideration. The target variable $\hat{y}_i$ is discretized before learning the structure. This is necessary to avoid the difficulty of perceiving changes in continuous probability distributions.&lt;/p&gt;
+&lt;p&gt;The system provides two views. The first, a feature board showing all relevant features with clickable values that formulate queries. These are clustered by theme. Any selection results in updates to marginal distributions for all other variables.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;table.png&#34; alt=&#34;Feature board&#34;&gt;&lt;/p&gt;
+&lt;p&gt;The second view is the learnt Bayesian network itself.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;graph.png&#34; alt=&#34;Network&#34;&gt;&lt;/p&gt;
+&lt;p&gt;We have deployed the system for several health and social care domains. Here we demonstrate it for a humanitarian application that deals with forced displacement. We explain two model classes for two tasks, one classification and one regression. Forced displacement refers to the involuntary movement of people away from their homes. This sector is highly complex, and a wide range of factors can potentially influence the onset and severity of displacement crisis. Responding organizations have to plan under high uncertainty on the type of humanitarian need. Previous user-studies for this sector has uncovered the need to surface this uncertainty (
+&lt;a href=&#34;https://dl.acm.org/doi/abs/10.1145/3334480.3382903&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Andres et al., 2020&lt;/a&gt;) which is both aleatory (uncertainty due to things that cannot be predicted) and epistemic (uncertainty due to missing information).&lt;/p&gt;
+&lt;p&gt;While the regression task is to forecast volume of displaced persons, the classification task seeks to classify if the volume is likely to exceed a &amp;ldquo;crisis&amp;rdquo; threshold (the UNHCR informally deems a crisis when displacement volumes are in excess of 75,000 persons). For each task, prospective explanations of two models each that are training on data from a period from 1980 through 2015. Data after 2015 is used for the validation set $D$. For classification, a logistic regression with validation accuracy (acc) 97.2% and a gradient boosted classifier (acc: 98.03%) are shown. Both models exhibit poor precision for the minority class. Compared to ground truth reference, the models are less likely to predict a crisis. For regression we show a linear regression (MAE: 2086.03) and a gradient boosted regressor (MAE: 1155.69). For the latter, baseline performance (overestimates for 100-5000 ranges, and underestimates for $&amp;gt;5000$) can be seen. When uses toggle the human rights dimension to `worse&amp;rsquo;, predictions for &amp;gt;5000 better match ground truth labels. While this estimator is highly non-linear,  the impact of influencing factors can be understood by interacting with features values and visual representation of outcome marginals.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

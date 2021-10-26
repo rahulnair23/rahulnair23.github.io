@@ -589,17 +589,17 @@
 <p>All this becomes clearer in the example, taken from Morrison&rsquo;s paper, below. The 5-node graph on the left has a corresponding ZDD on the right that encodes all possible maximal independent sets. The solid arrows are high branches, while the dashed ones are low branches.</p>
 <p><img src="fig.svg" alt="Alt"></p>
 <p>This Directed Acyclic Graph (DAG) encodes every possible maximal independent set. Every feasible path from the root node till the terminal node $\top$ represents a maximal independent set. The set it represented by nodes that have high branches coming out. For example, feasible path $v_1, v_2, v_3, v_4,\top$ represents an maximal independent set ${v_2, v_4}$ as these are the only nodes with solid (high) branches. There are several important properties of the ZDD that I skip here, like the uniqueness of nodes in $Z_s$, each node is encountered only once, etc.</p>
-<p>The ZDD can now be used to enumerate all maximal independent sets and support non-trivial operations that would be expensive otherwise, e.g. a count of all maximal independent sets without listing each one.</p>
+<p>The ZDD can now be used to enumerate all maximal independent sets and support non-trivial operations that would be expensive otherwise, e.g. a count of all maximal independent sets without listing each one. There are other advantages as well. For instance, if there is a need to repeatedly query this ZDD, for example when node weights change, then one can compute this efficiently. Mostly, ZDD offer a compact representation of the underlying set.</p>
 <h1 id="constructing-a-zdd">Constructing a ZDD</h1>
-<h1 id="extracting-independent-sets">Extracting independent sets</h1>
+<p>To do all of this, the ZDD needs to be constructed first. There are few methods to do this for each class of problem you want to solve. 
+<a href="https://doi.org/10.1007/s10878-014-9722-4" target="_blank" rel="noopener">Morrison et al. (2014)</a>, for example, tackle the case of the maximal independent set.</p>
+<p>In this case, they describe an algorithm that takes as input a graph and a vertex ordering (this ordering can be arbitrary - but does have an influence on the size of the ZDD). The procedure is recursive, and it each iteration a single node is considered. It first considers if a maximal set can be constructed from the remaining vertices. Remaining here are w.r.t. to the ordering. It also checks if the set is already maximal. For these two cases, the procedure returns with the terminal nodes, i.e. $\bot$ or $\top$. If these conditions are not met, it creates two branches for the current node based on the next undominated node. A new node is added if it hasn&rsquo;t previously been created.</p>
 <h1 id="reference-implementation">Reference implementation</h1>
-<h1 id="other-use-cases">Other use cases</h1>
-<p>0/1 Enumeration
-<a href="http://people.mpi-inf.mpg.de/alumni/d1/2019/behle/azove.html">http://people.mpi-inf.mpg.de/alumni/d1/2019/behle/azove.html</a></p>
-<h1 id="packages">Packages</h1>
-<p><a href="https://github.com/takemaru/graphillion">https://github.com/takemaru/graphillion</a>
-<a href="https://doi.org/10.1007/s10009-014-0352-z">https://doi.org/10.1007/s10009-014-0352-z</a></p>
-<p>dd?</p>
+<p>A reference implementation is forthcoming (when time permits!).</p>
+<p>There are existing packages like 
+<a href="https://github.com/takemaru/graphillion" target="_blank" rel="noopener">graphmillion</a> that provide powerful abstractions for common problem classes. See also their accompanying 
+<a href="https://doi.org/10.1007/s10009-014-0352-z" target="_blank" rel="noopener">paper</a>. 
+<a href="http://people.mpi-inf.mpg.de/alumni/d1/2019/behle/azove.html" target="_blank" rel="noopener">Azove</a> is another tool (uses binary decision diagrams) for vertex enumeration that may be of interest as well.</p>
 
     </div>
 
@@ -873,16 +873,6 @@
   
   <div class="container">
     <footer class="site-footer">
-  
-  <p class="powered-by">
-    
-      <a href="/privacy/">Privacy Policy</a>
-    
-    
-       &middot; 
-      <a href="/terms/">Terms</a>
-    
-  </p>
   
 
   <p class="powered-by">

@@ -5,12 +5,28 @@
     <link>https://rahulnair23.github.io/publication-type/2/</link>
       <atom:link href="https://rahulnair23.github.io/publication-type/2/index.xml" rel="self" type="application/rss+xml" />
     <description>2</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 01 Apr 2020 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 01 Jan 2021 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>2</title>
       <link>https://rahulnair23.github.io/publication-type/2/</link>
     </image>
+    
+    <item>
+      <title>Artificial intelligence indocyanine green (ICG) perfusion for colorectal cancer intra-operative tissue classification</title>
+      <link>https://rahulnair23.github.io/publication/cahill-2021-artificial/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/cahill-2021-artificial/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Robust transit line planning based on demand estimates obtained from mobile phones</title>
+      <link>https://rahulnair23.github.io/publication/lee-2021-robust/</link>
+      <pubDate>Fri, 01 Jan 2021 00:00:00 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/publication/lee-2021-robust/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Perfusion Quantification from Endoscopic Videos: Learning to Read Tumor Signatures</title>
