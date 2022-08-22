@@ -5,12 +5,78 @@
     <link>https://rahulnair23.github.io/</link>
       <atom:link href="https://rahulnair23.github.io/index.xml" rel="self" type="application/rss+xml" />
     <description>Rahul Nair</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 26 Oct 2021 14:14:05 +0100</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 16 Aug 2022 11:20:41 +0100</lastBuildDate>
     <image>
       <url>https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
       <title>Rahul Nair</title>
       <link>https://rahulnair23.github.io/</link>
     </image>
+    
+    <item>
+      <title>Some notes on Models of Environments</title>
+      <link>https://rahulnair23.github.io/post/on-models-of-environments/</link>
+      <pubDate>Tue, 16 Aug 2022 11:20:41 +0100</pubDate>
+      <guid>https://rahulnair23.github.io/post/on-models-of-environments/</guid>
+      <description>&lt;p&gt;Suppose you are given a dataset on some process with the following attributes. The process that generates the data is complex and not fully observable. The data only captures part of dynamics of the process. Part of the dynamics involve decisions that you can control at some point in the future. The hope is that these &lt;em&gt;knobs&lt;/em&gt; will be determined by some suitably advanced intelligence that needs to be determined as well. So you have two problems, (a) from the dataset infer process dynamics in a reasonable manner, and (b) determine an optimal policy that can control the environment determined in (a).&lt;/p&gt;
+&lt;p&gt;In established reinforcement learning parlance, the first problem deals with specifying the environment, and the second deals with defining the agent. This post is a short discussion of the former.&lt;/p&gt;
+&lt;h1 id=&#34;what-is-an-environment-anyway&#34;&gt;What is an environment anyway?&lt;/h1&gt;
+&lt;p&gt;The environment is the model of the world that the agent interacts with. It is associated with variables that describe its state. For instance, in an environment describing an HVAC system, one of the state variables could be the temperature of the room. If an agent &lt;em&gt;acts&lt;/em&gt; on this state, then the environment must minimally provide the next state and an estimate of the reward. We&amp;rsquo;ll get to the reward shortly. An agent in our HVAC example could be a person changing the temperature control. As a result of that change, the environment then provides a revised temperature of the room for the next time step.&lt;/p&gt;
+&lt;p&gt;The reward is a numeric value that encodes desirable behaviour that an agent seeks. In the HVAC example, this could be the negative of the absolute temperature difference between a desired temperature and the actual temperature (in the state variable). This way, when we maximise reward, we aim to keep the temperature close to the desired one (without getting too hot or too cold).&lt;/p&gt;
+&lt;p&gt;Therefore the environment must be able to assess the impact of an agent action on its state. In other words, it must encode transition &lt;em&gt;dynamics&lt;/em&gt; in some way. Additionally, it must estimate reward for a specific action when at a specific state. If you have these two elements, i.e. transitions and rewards, explicitly then you effectively have yourself a &lt;strong&gt;model&lt;/strong&gt; of the environment!&lt;/p&gt;
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure id=&#34;figure-reinforcement-learning-setting&#34;&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://rahulnair23.github.io/post/on-models-of-environments/cycle_hu0e3871549f1d8f32523f1036cced0d7b_26097_2000x2000_fit_lanczos_2.png&#34; data-caption=&#34;Reinforcement learning setting&#34;&gt;
+
+
+  &lt;img data-src=&#34;https://rahulnair23.github.io/post/on-models-of-environments/cycle_hu0e3871549f1d8f32523f1036cced0d7b_26097_2000x2000_fit_lanczos_2.png&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;523&#34; height=&#34;336&#34;&gt;
+&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    Reinforcement learning setting
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+&lt;p&gt;Modeling this explicitly is not necessary for reinforcement learning. You can short cut the model by directly interacting with the environment. This is known as the &lt;em&gt;model-free&lt;/em&gt; approach. These approaches do not make any assumptions beyond having a reward signal. So coming back to your problem at hand, you broadly have two choices:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;experience-based/model-free&lt;/strong&gt;: where you just sample next-state and reward based on past experiences that were similar (without bothering to actually learning anything about the process),&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;model-based&lt;/strong&gt;: where you explicitly try to learn elements of the underlying process (both transitions and rewards).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This distinction seems to be emphasized in the literature more than what the definitions suggest. The principle difference being where the transitions come from. So which path do you choose for the problem?&lt;/p&gt;
+&lt;p&gt;As always, &lt;em&gt;it depends!&lt;/em&gt;  When you have a model of the environment, its easier to gather data (you can simply generate more), but may be harder to learn the policy itself and require additional assumptions. A model may allow for appropriate abstraction of complexity from the real environment. On the other hand, model-free methods may be effective for complex policies, but require a lot of experience (i.e. slower), and generally not transferable across tasks.&lt;/p&gt;
+&lt;h1 id=&#34;lets-build-a-model-of-the-environment&#34;&gt;Let&amp;rsquo;s build a model of the environment&lt;/h1&gt;
+&lt;p&gt;Assume for the task at hand, the model-based approach is attractive. You have sufficient data to supervise the learning of transition and reward functions. You still have some choices on how to proceed.&lt;/p&gt;
+&lt;p&gt;The 
+&lt;a href=&#34;https://www.youtube.com/watch?v=Xrxrd8nl4YI&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Deep Mind Lecture&lt;/a&gt; on this topic has a nice overview of the main methods for model learning. Formally, our data represents a state-action-reward trajectory sequence, i.e. $$(S_1, A_1, R_1, S_2, &amp;hellip;, S_t, A_t, R_t, &amp;hellip;)$$, which is our experience. From this experience, we try to learn what the likely transitions and rewards are. To do so, we treat this as a supervised problem, i.e.
+$(S_1, A_1) \rightarrow (R_2, S_2)$, and in general $(S_{t}, A_t) \rightarrow (R_{t+1}, S_{t+1})$.&lt;/p&gt;
+&lt;p&gt;We then choose a function $f$, that given a state and action will provide the next state and reward, i.e. $$f(s, a) = r, s^\prime$$. We learn any parameters associated with $f$ by minimising a chosen loss function. The result is an &lt;strong&gt;expectation model&lt;/strong&gt;. There are some issues with expectation models for discrete values, but for linear values of you are mostly fine.&lt;/p&gt;
+&lt;p&gt;For some cases the outcomes may not be deterministic or you may need to predict exact viable states. In this case, a &lt;strong&gt;stochastic model&lt;/strong&gt; (or a generative model) provides a sample of the next likely state but introduces noise in the process of doing so. For cases where the state and action spaces are not prohibitively large, a &lt;strong&gt;full model&lt;/strong&gt; can be determined.&lt;/p&gt;
+&lt;p&gt;Its also useful to distinguish between &lt;strong&gt;off-policy&lt;/strong&gt; and &lt;strong&gt;on-policy&lt;/strong&gt; methods at this point. An &lt;em&gt;off-policy&lt;/em&gt; algorithm uses trajectories generates by some other policy to learn better policies for the agent. Examples of off-policy methods include Q-learning. On-policy algorithms on the other hand train an agent and use the same policy as its being learnt. Examples include SARSA.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Prospective Explanations</title>

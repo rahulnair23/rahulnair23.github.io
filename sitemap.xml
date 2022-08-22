@@ -3,28 +3,43 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://rahulnair23.github.io/</loc>
+    <lastmod>2022-08-16T11:20:41+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://rahulnair23.github.io/tag/reinforcement-learning/</loc>
+    <lastmod>2022-08-16T11:20:41+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://rahulnair23.github.io/post/on-models-of-environments/</loc>
+    <lastmod>2022-08-16T11:20:41+01:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://rahulnair23.github.io/tags/</loc>
+    <lastmod>2022-08-16T11:20:41+01:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://rahulnair23.github.io/categories/</loc>
-    <lastmod>2021-10-26T14:14:05+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/category/explainability/</loc>
-    <lastmod>2021-10-26T14:14:05+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/post/prospective-explanations/</loc>
-    <lastmod>2021-10-26T14:14:05+01:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://rahulnair23.github.io/</loc>
-    <lastmod>2021-10-26T15:44:13+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/category/xai/</loc>
-    <lastmod>2021-10-26T14:14:05+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
@@ -39,7 +54,7 @@
   
   <url>
     <loc>https://rahulnair23.github.io/tag/optimization/</loc>
-    <lastmod>2021-05-06T21:08:43+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
@@ -48,138 +63,133 @@
   </url>
   
   <url>
-    <loc>https://rahulnair23.github.io/tags/</loc>
-    <lastmod>2021-05-06T21:08:43+01:00</lastmod>
-  </url>
-  
-  <url>
     <loc>https://rahulnair23.github.io/tag/graph-theory/</loc>
-    <lastmod>2021-05-06T21:08:43+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/post/decision-diagrams/</loc>
-    <lastmod>2021-05-06T21:08:43+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/publication-type/1/</loc>
-    <lastmod>2021-10-26T15:44:13+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/publication-type/2/</loc>
-    <lastmod>2021-10-26T15:44:11+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/publication/cahill-2021-artificial/</loc>
-    <lastmod>2021-10-26T15:44:10+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/authors/</loc>
-    <lastmod>2021-10-26T15:44:13+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/author/chungmok-lee/</loc>
-    <lastmod>2021-10-26T15:44:11+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/author/dennis-wei/</loc>
-    <lastmod>2021-10-26T15:44:13+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/author/df-oshea/</loc>
-    <lastmod>2021-10-26T15:44:10+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/author/elizabeth-daly/</loc>
-    <lastmod>2021-10-26T15:44:13+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/author/elizabeth-m-daly/</loc>
-    <lastmod>2021-10-26T15:44:12+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/author/ha-khokhar/</loc>
-    <lastmod>2021-10-26T15:44:10+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/author/jp-epperlein/</loc>
-    <lastmod>2021-10-26T15:44:10+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/author/massimiliano-mattetti/</loc>
-    <lastmod>2021-10-26T15:44:13+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/author/mf-khan/</loc>
-    <lastmod>2021-10-26T15:44:10+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/author/pg-mac-aonghusa/</loc>
-    <lastmod>2021-10-26T15:44:10+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/publication_types/</loc>
-    <lastmod>2021-10-26T15:44:13+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/author/r-nair/</loc>
-    <lastmod>2021-10-26T15:44:10+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/author/ra-cahill/</loc>
-    <lastmod>2021-10-26T15:44:10+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/author/rahul-nair/</loc>
-    <lastmod>2021-10-26T15:44:13+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/publication/lee-2021-robust/</loc>
-    <lastmod>2021-10-26T15:44:11+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/author/sm-zhuk/</loc>
-    <lastmod>2021-10-26T15:44:10+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/publication/daly-2021-user/</loc>
-    <lastmod>2021-10-26T15:44:12+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/publication/nair-2021-changed/</loc>
-    <lastmod>2021-10-26T15:44:13+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/author/yunfeng-zhang/</loc>
-    <lastmod>2021-10-26T15:44:13+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
     <loc>https://rahulnair23.github.io/author/oznur-alkan/</loc>
-    <lastmod>2021-10-26T15:44:13+01:00</lastmod>
+    <lastmod>2021-10-26T16:03:49+01:00</lastmod>
   </url>
   
   <url>
