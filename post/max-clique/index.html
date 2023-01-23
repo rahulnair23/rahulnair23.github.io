@@ -225,8 +225,8 @@
   
 
   <link rel="manifest" href="/index.webmanifest">
-  <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
-  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
+  <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png">
 
   <link rel="canonical" href="https://rahulnair23.github.io/post/max-clique/">
 
@@ -246,8 +246,8 @@
   <meta property="og:site_name" content="Rahul Nair">
   <meta property="og:url" content="https://rahulnair23.github.io/post/max-clique/">
   <meta property="og:title" content="Maximum weighted cliques in a graph | Rahul Nair">
-  <meta property="og:description" content="Recently, I had the need to compute maximum weighted cliques on very dense large graphs. This is a well studied problem, and a nice survey paper from 90&rsquo;s by Pardalos and Xue gives a good overview of approaches."><meta property="og:image" content="https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
-  <meta property="twitter:image" content="https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
+  <meta property="og:description" content="Recently, I had the need to compute maximum weighted cliques on very dense large graphs. This is a well studied problem, and a nice survey paper from 90&rsquo;s by Pardalos and Xue gives a good overview of approaches."><meta property="og:image" content="https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png">
+  <meta property="twitter:image" content="https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png"><meta property="og:locale" content="en-us">
   
     
       <meta property="article:published_time" content="2020-06-05T10:44:59&#43;01:00">
@@ -293,7 +293,7 @@
     "name": "Rahul Nair",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
+      "url": "https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
     }
   },
   "description": "Recently, I had the need to compute maximum weighted cliques on very dense large graphs. This is a well studied problem, and a nice survey paper from 90\u0026rsquo;s by Pardalos and Xue gives a good overview of approaches."
@@ -582,8 +582,8 @@
 <h2 id="solutions">Solutions</h2>
 <p>For general graphs, finding the maximum cliques is a hard problem (NP-complete). An integer programming approach that involves edges can be written as:</p>
 <p>$$\begin{aligned}
-\max_x &amp; \sum_{i\in V} d_i x_{i}\\<br>
-\mbox{s.t.} \qquad &amp; x_i + x_j \le 1 \quad \forall (i, j) \in \bar{E} \\<br>
+\max_x &amp; \sum_{i\in V} d_i x_{i}\\
+\mbox{s.t.} \qquad &amp; x_i + x_j \le 1 \quad \forall (i, j) \in \bar{E} \\
 &amp; x_i \in {0, 1} \qquad \forall i\in V
 \end{aligned}
 $$</p>
@@ -595,8 +595,8 @@ $$</p>
 <h2 id="an-alternative-formulation">An alternative formulation</h2>
 <p>The notion of the complement edge set $\bar{E}$ can be strengthened using independent sets. If you know an independent set, a clique can contain at most one vertex from such a set. To write this as a constraint, one would need to consider <em>maximum</em> independent sets, lest you allow the omitted vertices to be included in the clique. Further, you would need to look at all maximum independent sets that arise in $G$. Assume for a moment that the set of maximum independent sets $\mathbb{S}$ is known. Then the problem of finding the maximum weighted clique can be written as</p>
 <p>$$\begin{aligned}
-\max_x &amp; \sum_{i\in V} d_i x_{i}\\<br>
-\mbox{s.t.} \qquad &amp; \sum_{i\in I} x_i \le 1 \quad \forall I \in \mathbb{S} \\<br>
+\max_x &amp; \sum_{i\in V} d_i x_{i}\\
+\mbox{s.t.} \qquad &amp; \sum_{i\in I} x_i \le 1 \quad \forall I \in \mathbb{S} \\
 &amp; x_i \in {0, 1} \qquad \forall i\in V
 \end{aligned}
 $$</p>
@@ -638,10 +638,10 @@ nx.draw(G, with_labels=True)
 <figure id="figure-an-test-graph-with-known-max-cliques">
 
 
-  <a data-fancybox="" href="/post/max-clique/graph_hu66fa372f34c55a7f200bf8e44ac04457_35825_2000x2000_fit_lanczos_2.png" data-caption="An test graph with known max cliques">
+  <a data-fancybox="" href="/post/max-clique/graph_hu66fa372f34c55a7f200bf8e44ac04457_35825_2000x2000_fit_lanczos_3.png" data-caption="An test graph with known max cliques">
 
 
-  <img data-src="/post/max-clique/graph_hu66fa372f34c55a7f200bf8e44ac04457_35825_2000x2000_fit_lanczos_2.png" class="lazyload" alt="" width="640" height="480">
+  <img data-src="/post/max-clique/graph_hu66fa372f34c55a7f200bf8e44ac04457_35825_2000x2000_fit_lanczos_3.png" class="lazyload" alt="" width="640" height="480">
 </a>
 
 
@@ -872,6 +872,7 @@ x8 1.0
 
 
 
+
 <div class="article-tags">
   
   <a class="badge badge-light" href="/tag/optimization/">optimization</a>
@@ -1003,6 +1004,8 @@ x8 1.0
 
 
 
+
+
   
   
   <div class="article-widget content-widget-hr">
@@ -1020,6 +1023,7 @@ x8 1.0
 
 
 
+
   </div>
 </article>
 
@@ -1028,7 +1032,7 @@ x8 1.0
     
     
     
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
@@ -1073,7 +1077,8 @@ x8 1.0
         'post': "Posts",
         'project': "Projects",
         'publication' : "Publications",
-        'talk' : "Talks"
+        'talk' : "Talks",
+        'slides' : "Slides"
         };
     </script>
     
@@ -1125,7 +1130,7 @@ x8 1.0
     
     
     
-    <script src="/js/academic.min.37431be2d92d7fb0160054761ab79602.js"></script>
+    <script src="/js/academic.min.cd45a9c0bbdd3dfb1c126917c601c9f2.js"></script>
 
     
 

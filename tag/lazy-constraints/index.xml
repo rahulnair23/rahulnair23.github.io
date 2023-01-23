@@ -7,7 +7,7 @@
     <description>lazy constraints</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 05 Jun 2020 10:44:59 +0100</lastBuildDate>
     <image>
-      <url>https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <url>https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>lazy constraints</title>
       <link>https://rahulnair23.github.io/tag/lazy-constraints/</link>
     </image>
@@ -25,8 +25,8 @@
 &lt;h2 id=&#34;solutions&#34;&gt;Solutions&lt;/h2&gt;
 &lt;p&gt;For general graphs, finding the maximum cliques is a hard problem (NP-complete). An integer programming approach that involves edges can be written as:&lt;/p&gt;
 &lt;p&gt;$$\begin{aligned}
-\max_x &amp;amp; \sum_{i\in V} d_i x_{i}\\&lt;br&gt;
-\mbox{s.t.} \qquad &amp;amp; x_i + x_j \le 1 \quad \forall (i, j) \in \bar{E} \\&lt;br&gt;
+\max_x &amp;amp; \sum_{i\in V} d_i x_{i}\\
+\mbox{s.t.} \qquad &amp;amp; x_i + x_j \le 1 \quad \forall (i, j) \in \bar{E} \\
 &amp;amp; x_i \in {0, 1} \qquad \forall i\in V
 \end{aligned}
 $$&lt;/p&gt;
@@ -38,8 +38,8 @@ $$&lt;/p&gt;
 &lt;h2 id=&#34;an-alternative-formulation&#34;&gt;An alternative formulation&lt;/h2&gt;
 &lt;p&gt;The notion of the complement edge set $\bar{E}$ can be strengthened using independent sets. If you know an independent set, a clique can contain at most one vertex from such a set. To write this as a constraint, one would need to consider &lt;em&gt;maximum&lt;/em&gt; independent sets, lest you allow the omitted vertices to be included in the clique. Further, you would need to look at all maximum independent sets that arise in $G$. Assume for a moment that the set of maximum independent sets $\mathbb{S}$ is known. Then the problem of finding the maximum weighted clique can be written as&lt;/p&gt;
 &lt;p&gt;$$\begin{aligned}
-\max_x &amp;amp; \sum_{i\in V} d_i x_{i}\\&lt;br&gt;
-\mbox{s.t.} \qquad &amp;amp; \sum_{i\in I} x_i \le 1 \quad \forall I \in \mathbb{S} \\&lt;br&gt;
+\max_x &amp;amp; \sum_{i\in V} d_i x_{i}\\
+\mbox{s.t.} \qquad &amp;amp; \sum_{i\in I} x_i \le 1 \quad \forall I \in \mathbb{S} \\
 &amp;amp; x_i \in {0, 1} \qquad \forall i\in V
 \end{aligned}
 $$&lt;/p&gt;
@@ -81,10 +81,10 @@ nx.draw(G, with_labels=True)
 &lt;figure id=&#34;figure-an-test-graph-with-known-max-cliques&#34;&gt;
 
 
-  &lt;a data-fancybox=&#34;&#34; href=&#34;https://rahulnair23.github.io/post/max-clique/graph_hu66fa372f34c55a7f200bf8e44ac04457_35825_2000x2000_fit_lanczos_2.png&#34; data-caption=&#34;An test graph with known max cliques&#34;&gt;
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://rahulnair23.github.io/post/max-clique/graph_hu66fa372f34c55a7f200bf8e44ac04457_35825_2000x2000_fit_lanczos_3.png&#34; data-caption=&#34;An test graph with known max cliques&#34;&gt;
 
 
-  &lt;img data-src=&#34;https://rahulnair23.github.io/post/max-clique/graph_hu66fa372f34c55a7f200bf8e44ac04457_35825_2000x2000_fit_lanczos_2.png&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;640&#34; height=&#34;480&#34;&gt;
+  &lt;img data-src=&#34;https://rahulnair23.github.io/post/max-clique/graph_hu66fa372f34c55a7f200bf8e44ac04457_35825_2000x2000_fit_lanczos_3.png&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;640&#34; height=&#34;480&#34;&gt;
 &lt;/a&gt;
 
 

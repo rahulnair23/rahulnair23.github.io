@@ -225,8 +225,8 @@
   
 
   <link rel="manifest" href="/index.webmanifest">
-  <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_2.png">
-  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png">
+  <link rel="icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_32x32_fill_lanczos_center_3.png">
+  <link rel="apple-touch-icon" type="image/png" href="/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png">
 
   <link rel="canonical" href="https://rahulnair23.github.io/post/boolean-rules/">
 
@@ -246,8 +246,8 @@
   <meta property="og:site_name" content="Rahul Nair">
   <meta property="og:url" content="https://rahulnair23.github.io/post/boolean-rules/">
   <meta property="og:title" content="Model explanations via column generation | Rahul Nair">
-  <meta property="og:description" content="In this post, I&rsquo;ll review a paper from 2018 that deals with generating boolean decision rules and uses column generation. The paper is well worth the read if you are interested in explainable AI models."><meta property="og:image" content="https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png">
-  <meta property="twitter:image" content="https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png"><meta property="og:locale" content="en-us">
+  <meta property="og:description" content="In this post, I&rsquo;ll review a paper from 2018 that deals with generating boolean decision rules and uses column generation. The paper is well worth the read if you are interested in explainable AI models."><meta property="og:image" content="https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png">
+  <meta property="twitter:image" content="https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png"><meta property="og:locale" content="en-us">
   
     
       <meta property="article:published_time" content="2020-06-16T10:46:12&#43;01:00">
@@ -293,7 +293,7 @@
     "name": "Rahul Nair",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_2.png"
+      "url": "https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_192x192_fill_lanczos_center_3.png"
     }
   },
   "description": "In this post, I\u0026rsquo;ll review a paper from 2018 that deals with generating boolean decision rules and uses column generation. The paper is well worth the read if you are interested in explainable AI models."
@@ -596,13 +596,13 @@
 <p>There are two decision variables. First is $w_k$ (for all $k$ in set $K$) - a binary variable on if clause $k$ is selected for the model. Each clause $k$ in $K$ has an associated complexity $c_k$. The second is $\xi_i$ defined for $i \in P$ (i.e. for all positive samples) denotes all samples that are classified incorrectly.</p>
 <p>The objective looks to minimize Hamming loss which is the fraction of misclassified samples. Specifically, this can be written as</p>
 <p>$$
-\min_{\xi, w} \color{blue}\underbrace{\color{black}\sum_{i\in P} \xi_i}_{\text{false negatives}} {\color{black}+}
-\color{blue}\underbrace{\color{black}\sum_{i\in Z}\sum_{k\in K_i} w_k}_{\text{false positives}}
+\min_{\xi, w} \color{blue}\underbrace{\color{black}\sum_{i\in P} \xi_i}<em>{\text{false negatives}} {\color{black}+}
+\color{blue}\underbrace{\color{black}\sum</em>{i\in Z}\sum_{k\in K_i} w_k}_{\text{false positives}}
 $$</p>
 <p>False positives add more than &ldquo;one unit&rdquo; if multiple clauses are satisfied. This is</p>
 <p>$$\begin{aligned}
-\mbox{s.t.} \qquad &amp; \xi_i + \sum_{k\in K_i} w_k \ge 1 \qquad \xi_i \ge 0, \qquad i\in P \\<br>
-&amp; \sum_{k\in K} c_k w_k \le C \\<br>
+\mbox{s.t.} \qquad &amp; \xi_i + \sum_{k\in K_i} w_k \ge 1 \qquad \xi_i \ge 0, \qquad i\in P \\
+&amp; \sum_{k\in K} c_k w_k \le C \\
 &amp; w_k \in \{0, 1\} \qquad \forall k\in K
 \end{aligned}
 $$</p>
@@ -615,14 +615,14 @@ $$</p>
 <p>A bit more notation. From the program above, take $\mu_i$ to be the dual variables associated with the first constraint, and $\lambda$ be the dual variable for the complexity constraint. Define two sets of decision variables $\delta_i$ for all observations $i$ and $z_j$ if feature $j\in J$ is selected in missing constraint. Additionally denote $S_i$ to be a set of zero valued features for sample $i$.</p>
 <p>Armed with this, the sub-problem to identify a clause to include (with the greatest negative reduce cost) can be formulated as:</p>
 <p>$$
-\min_{\delta, z} \color{blue}\underbrace{\color{black}\lambda\left(1+\sum_{j\in J}z_j\right)}_{\substack{\text{complexity of new rule}\\\text{in terms of features selected}}} {\color{black}-}
-\color{blue}\underbrace{\color{black}\sum_{i\in P} \mu_i \delta_i}_{\substack{\text{how much the new rule}\\\text{improves false negatives}}}{\color{black}+}
-\color{blue}\underbrace{\color{black}\sum_{i\in Z} \delta_i}_{\substack{\text{how much the new rule}\\\text{hurts false positives}}}
+\min_{\delta, z} \color{blue}\underbrace{\color{black}\lambda\left(1+\sum_{j\in J}z_j\right)}<em>{\substack{\text{complexity of new rule}\\\text{in terms of features selected}}} {\color{black}-}
+\color{blue}\underbrace{\color{black}\sum</em>{i\in P} \mu_i \delta_i}<em>{\substack{\text{how much the new rule}\\\text{improves false negatives}}}{\color{black}+}
+\color{blue}\underbrace{\color{black}\sum</em>{i\in Z} \delta_i}_{\substack{\text{how much the new rule}\\\text{hurts false positives}}}
 $$</p>
 <p>$$\begin{aligned}
-\mbox{s.t.} \qquad &amp; \delta_i + z_j\le 1 \qquad j\in S_i, \qquad i\in P \\<br>
-&amp;  \delta_i \ge 1- \sum_{j\in S_i} z_j \qquad \delta_i\ge 0 \qquad i\in Z\\<br>
-&amp; \sum_{j\in J} z_j \le D \\<br>
+\mbox{s.t.} \qquad &amp; \delta_i + z_j\le 1 \qquad j\in S_i, \qquad i\in P \\
+&amp;  \delta_i \ge 1- \sum_{j\in S_i} z_j \qquad \delta_i\ge 0 \qquad i\in Z\\
+&amp; \sum_{j\in J} z_j \le D \\
 &amp; z_j \in \{0, 1\} \qquad \forall j\in J
 \end{aligned}
 $$</p>
@@ -682,15 +682,16 @@ $$</p>
 
 
 
+
 <div class="article-tags">
   
-  <a class="badge badge-light" href="/tag/column-generation/">column generation</a>
+  <a class="badge badge-light" href="/tag/explainability/">explainability</a>
   
   <a class="badge badge-light" href="/tag/aix360/">AIX360</a>
   
   <a class="badge badge-light" href="/tag/boolean-decision-rules/">boolean decision rules</a>
   
-  <a class="badge badge-light" href="/tag/explainability/">explainability</a>
+  <a class="badge badge-light" href="/tag/column-generation/">column generation</a>
   
   <a class="badge badge-light" href="/tag/mixed-integer-programming/">mixed integer programming</a>
   
@@ -817,6 +818,8 @@ $$</p>
 
 
 
+
+
   
   
   <div class="article-widget content-widget-hr">
@@ -834,6 +837,7 @@ $$</p>
 
 
 
+
   </div>
 </article>
 
@@ -842,7 +846,7 @@ $$</p>
     
     
     
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js" integrity="sha256-yt2kYMy0w8AbtF89WXb2P1rfjcP/HTHLT7097U8Y5b8=" crossorigin="anonymous"></script>
@@ -887,7 +891,8 @@ $$</p>
         'post': "Posts",
         'project': "Projects",
         'publication' : "Publications",
-        'talk' : "Talks"
+        'talk' : "Talks",
+        'slides' : "Slides"
         };
     </script>
     
@@ -939,7 +944,7 @@ $$</p>
     
     
     
-    <script src="/js/academic.min.37431be2d92d7fb0160054761ab79602.js"></script>
+    <script src="/js/academic.min.cd45a9c0bbdd3dfb1c126917c601c9f2.js"></script>
 
     
 

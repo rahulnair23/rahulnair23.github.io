@@ -7,10 +7,50 @@
     <description>Posts</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language>
     <image>
-      <url>https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <url>https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>Posts</title>
       <link>https://rahulnair23.github.io/post/</link>
     </image>
+    
+    <item>
+      <title>Optimal Counterfactuals in Tree Ensembles</title>
+      <link>https://rahulnair23.github.io/post/counterfactuals-ensembles/</link>
+      <pubDate>Mon, 23 Jan 2023 14:03:27 +0000</pubDate>
+      <guid>https://rahulnair23.github.io/post/counterfactuals-ensembles/</guid>
+      <description>&lt;p&gt;This is a brief review of a 
+&lt;a href=&#34;https://arxiv.org/abs/2106.06631&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;paper&lt;/a&gt; by Parmentier and Vidal on &amp;ldquo;Optimal Counterfactual Explanations in Tree Ensembles&amp;rdquo;. A counterfactual explanation, in the context of machine learning (ML) models, answers the question what is the minimal change in input (features) that yields a different (desirable) outcome? In the context of ML deployments this type of reasoning provides a substantive recourse to people subject to algorithmic decision making. It could also be viewed as a form of justification for a negative outcome.&lt;/p&gt;
+&lt;p&gt;Two aspects are of interest in this paper. First, it deals with finding a specific input in the feature space that optimizes some criteria. While their criteria is different, this is similar to what we aimed to do in our 
+&lt;a href=&#34;https://arxiv.org/abs/2211.01498v1&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;paper&lt;/a&gt; on quantifying safety via maximum deviations, which looks for the worst case input that maximizes the deviation from the output relative to some reference model. Second, it offers a formulation that could be potentially reused for our safety assessments in tree ensembles using mixed integer programming.&lt;/p&gt;
+&lt;h1 id=&#34;model-setting&#34;&gt;Model Setting&lt;/h1&gt;
+&lt;p&gt;A standard supervised classification setting, with a training set $\{x_k, c_k\}_{k=1}^n$ with each $x_k$ a $p$-dimensional vector associated with an outcome label $c_k \in \mathcal{C}$ is assumed.&lt;/p&gt;
+&lt;p&gt;A tree ensemble (e.g. gradient boosted trees, random forest) is denoted by $\mathcal{T}$ that have a set of trees $t \in \mathcal{T}$ that maps inputs to class probabilities $F_{tc}$. For an input sample $\mathbb{x}$, the tree ensemble returns class $c$ that maximizes the sum of probabilities, i.e. $F_{\mathcal{T}}(\mathbb{x}) = \arg \max_c \sum w_t F_{tc}(\mathbb{x})$.&lt;/p&gt;
+&lt;p&gt;The paper then develops a mixed integer program in two stages, (a) branching decisions, and (b) feature consistency across trees.&lt;/p&gt;
+&lt;h2 id=&#34;branch-choices&#34;&gt;Branch Choices&lt;/h2&gt;
+&lt;p&gt;The internal structure is modeled as a network flow problem, albeit without an explicit sink node. But this isn&amp;rsquo;t needed. There is one unit of flow that starts at the root node and must travel to a leaf node. The nice trick here is to use decision variables to constrain flows at &amp;ldquo;transshipment&amp;rdquo; nodes. This allows the number of binary variables to be reduced.&lt;/p&gt;
+&lt;p&gt;Specifically,&lt;/p&gt;
+&lt;p&gt;$$
+\begin{align}
+y_t = 1 &amp;amp; \qquad t \in \mathcal{T} \\
+y_{tv} = y_{tl(v)} + y_{tr(v)} &amp;amp; \qquad t\in \mathcal{T}, v \in \mathcal{V}_t^I \\
+\sum _{v \in \mathcal{V} _{td}^I} y _{tl(v)} \le \lambda _{td} &amp;amp;  \qquad t \in \mathcal{T}, d \in D_t \\
+y _{tv} \in [0, 1] &amp;amp; \qquad t \in \mathcal{T}, v \in \mathcal{V} _t^I \cup \mathcal{V} _t^L \\
+\lambda _{td} \in \{0, 1\} &amp;amp; \qquad t \in \mathcal{T}, d \in D_t.
+\end{align}
+$$&lt;/p&gt;
+&lt;p&gt;The first equation initializes flow at the root node at each tree to one unit quantity. The next equation is a flow conservation constraint, i.e. the sum of flow to the child nodes is equal to what is available at the parent node. The next constraint works at a specific depth level by limiting the lambdas to be 1 if any of the left branches have non-zero flows. In the supplement they use an induction argument to prove that the result of this set of constraints will result in integer $y$&amp;rsquo;s even if they are modeled as continuous variables. At first inspection, seems like this would admit fractional solutions as well.&lt;/p&gt;
+&lt;h2 id=&#34;consistency&#34;&gt;Consistency&lt;/h2&gt;
+&lt;p&gt;The $y$ and $\lambda$ decision variables decide on flows through each tree independently. However, depending on what the optimization criteria is - the flows must be consistent across all the trees. For example, a split node that uses gender as a feature, cannot simultaneously branch left and right (in different trees). To address this, the introduce classes of feature variables to handle various cases where features are numerical, categorical, or binary. Take the example of binary features, they introduce a decision variable for each feature $x_i$ which is binary. At each split node, the branching is made consistent by adding the constraints
+$$
+\begin{aligned}
+x_i \le 1 - y_{tl(v)} &amp;amp; \qquad \\
+x_i \ge y_{tr(v)} &amp;amp; \quad  t \in \mathcal{T}, v \in \mathcal{V} _{ti}^I
+\end{aligned}
+$$&lt;/p&gt;
+&lt;p&gt;The objective of their model is to minimize the Gower distance from the input vector. This is treated independently for each of the feature cases and is modeled as a cost that needs to be minimized. This concludes the model specification. Overall, this approach reduces the number of integer variables, and so has computational benefits. Several of the decision variables (but not all) can be relaxed leading to simpler models that are shown to be solved quickly.&lt;/p&gt;
+&lt;p&gt;Code for this is available 
+&lt;a href=&#34;https://github.com/vidalt/OCEAN&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;here&lt;/a&gt; and may be a point of review for a future note.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>Some notes on Models of Environments</title>
@@ -44,10 +84,10 @@
 &lt;figure id=&#34;figure-reinforcement-learning-setting&#34;&gt;
 
 
-  &lt;a data-fancybox=&#34;&#34; href=&#34;https://rahulnair23.github.io/post/on-models-of-environments/cycle_hu0e3871549f1d8f32523f1036cced0d7b_26097_2000x2000_fit_lanczos_2.png&#34; data-caption=&#34;Reinforcement learning setting&#34;&gt;
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://rahulnair23.github.io/post/on-models-of-environments/cycle_hu0e3871549f1d8f32523f1036cced0d7b_26097_2000x2000_fit_lanczos_3.png&#34; data-caption=&#34;Reinforcement learning setting&#34;&gt;
 
 
-  &lt;img data-src=&#34;https://rahulnair23.github.io/post/on-models-of-environments/cycle_hu0e3871549f1d8f32523f1036cced0d7b_26097_2000x2000_fit_lanczos_2.png&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;523&#34; height=&#34;336&#34;&gt;
+  &lt;img data-src=&#34;https://rahulnair23.github.io/post/on-models-of-environments/cycle_hu0e3871549f1d8f32523f1036cced0d7b_26097_2000x2000_fit_lanczos_3.png&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;523&#34; height=&#34;336&#34;&gt;
 &lt;/a&gt;
 
 
@@ -117,9 +157,9 @@ $(S_1, A_1) \rightarrow (R_2, S_2)$, and in general $(S_{t}, A_t) \rightarrow (R
 &lt;h2 id=&#34;the-problem&#34;&gt;The problem&lt;/h2&gt;
 &lt;p&gt;In the basic setting, we have a set $X$ of elements and a collection of possible partitions $K={k_1, k_2,&amp;hellip;,k_m}$ and a cost function $c(k_j)$ associated with each partition. $K$ is a very large collection as there are several ways to divide a set. We define a membership matrix $A = [a_{ij}]$ where $a_{ij}=1$ if element $i$ from $X$ is in the partition $k_j$ and $0$ otherwise. We denote $x_j$ as a decision variable to decide if partition $k_j$ is employed/used or not. With these definitions, the set partitioning problem can be written as:&lt;/p&gt;
 &lt;p&gt;$$\begin{aligned}
-\min_{x} \quad &amp;amp; \sum_{j=1}^{n} c(k_j) x_j\\&lt;br&gt;
-\textrm{s.t.} \quad &amp;amp; \sum_{j=1}^{m} a_{ij}x_j=1 \quad \forall i=1,&amp;hellip;,n\\&lt;br&gt;
-&amp;amp;x_j\in {0,1}    \\&lt;br&gt;
+\min_{x} \quad &amp;amp; \sum_{j=1}^{n} c(k_j) x_j\\
+\textrm{s.t.} \quad &amp;amp; \sum_{j=1}^{m} a_{ij}x_j=1 \quad \forall i=1,&amp;hellip;,n\\
+&amp;amp;x_j\in {0,1}    \\
 \end{aligned}
 $$&lt;/p&gt;
 &lt;p&gt;The program seeks to find a set of partitions that divide the input feature space such that every element is covered by exactly one partition. (If we allow for overlap between partitions, we could use a coverage type constraint $\sum a_{ij}x_j \ge 1$ as well). The objective is to find a partitioning that minimizes the total cost of the partition.&lt;/p&gt;
@@ -135,8 +175,8 @@ $$&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;$$\begin{aligned}
-\min_{z} \quad &amp;amp; c(z) - \sum_{i=1}^{n} \pi_i z_i\\&lt;br&gt;
-&amp;amp;z_i\in {0,1}    \\&lt;br&gt;
+\min_{z} \quad &amp;amp; c(z) - \sum_{i=1}^{n} \pi_i z_i\\
+&amp;amp;z_i\in {0,1}    \\
 \end{aligned}
 $$&lt;/p&gt;
 &lt;p&gt;where $c(z)$ denotes the cost of the chosen partition. Depending on your problem specifics and the nature of this function the manner in which you solve this would vary. Looking for the column with the greatest negative reduced cost is a heuristic step and can be replaced by other procedures to generate new candidate partitions if you have some insights that help you to do so.&lt;/p&gt;
@@ -394,7 +434,8 @@ list(zip(*[iter(k)]*2))
   
   
   &lt;figcaption&gt;
-    The Victoria Public Hall that was built on the park ~1888 &lt;a href=&#34;https://commons.wikimedia.org/wiki/File:Victoria_Public_Hall,_Chennai.JPG&#34;&gt;(source)&lt;/a&gt;
+    The Victoria Public Hall that was built on the park ~1888 
+&lt;a href=&#34;https://commons.wikimedia.org/wiki/File:Victoria_Public_Hall,_Chennai.JPG&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;(source)&lt;/a&gt;
   &lt;/figcaption&gt;
 
 
@@ -434,13 +475,13 @@ list(zip(*[iter(k)]*2))
 &lt;p&gt;There are two decision variables. First is $w_k$ (for all $k$ in set $K$) - a binary variable on if clause $k$ is selected for the model. Each clause $k$ in $K$ has an associated complexity $c_k$. The second is $\xi_i$ defined for $i \in P$ (i.e. for all positive samples) denotes all samples that are classified incorrectly.&lt;/p&gt;
 &lt;p&gt;The objective looks to minimize Hamming loss which is the fraction of misclassified samples. Specifically, this can be written as&lt;/p&gt;
 &lt;p&gt;$$
-\min_{\xi, w} \color{blue}\underbrace{\color{black}\sum_{i\in P} \xi_i}_{\text{false negatives}} {\color{black}+}
-\color{blue}\underbrace{\color{black}\sum_{i\in Z}\sum_{k\in K_i} w_k}_{\text{false positives}}
+\min_{\xi, w} \color{blue}\underbrace{\color{black}\sum_{i\in P} \xi_i}&lt;em&gt;{\text{false negatives}} {\color{black}+}
+\color{blue}\underbrace{\color{black}\sum&lt;/em&gt;{i\in Z}\sum_{k\in K_i} w_k}_{\text{false positives}}
 $$&lt;/p&gt;
 &lt;p&gt;False positives add more than &amp;ldquo;one unit&amp;rdquo; if multiple clauses are satisfied. This is&lt;/p&gt;
 &lt;p&gt;$$\begin{aligned}
-\mbox{s.t.} \qquad &amp;amp; \xi_i + \sum_{k\in K_i} w_k \ge 1 \qquad \xi_i \ge 0, \qquad i\in P \\&lt;br&gt;
-&amp;amp; \sum_{k\in K} c_k w_k \le C \\&lt;br&gt;
+\mbox{s.t.} \qquad &amp;amp; \xi_i + \sum_{k\in K_i} w_k \ge 1 \qquad \xi_i \ge 0, \qquad i\in P \\
+&amp;amp; \sum_{k\in K} c_k w_k \le C \\
 &amp;amp; w_k \in \{0, 1\} \qquad \forall k\in K
 \end{aligned}
 $$&lt;/p&gt;
@@ -453,14 +494,14 @@ $$&lt;/p&gt;
 &lt;p&gt;A bit more notation. From the program above, take $\mu_i$ to be the dual variables associated with the first constraint, and $\lambda$ be the dual variable for the complexity constraint. Define two sets of decision variables $\delta_i$ for all observations $i$ and $z_j$ if feature $j\in J$ is selected in missing constraint. Additionally denote $S_i$ to be a set of zero valued features for sample $i$.&lt;/p&gt;
 &lt;p&gt;Armed with this, the sub-problem to identify a clause to include (with the greatest negative reduce cost) can be formulated as:&lt;/p&gt;
 &lt;p&gt;$$
-\min_{\delta, z} \color{blue}\underbrace{\color{black}\lambda\left(1+\sum_{j\in J}z_j\right)}_{\substack{\text{complexity of new rule}\\\text{in terms of features selected}}} {\color{black}-}
-\color{blue}\underbrace{\color{black}\sum_{i\in P} \mu_i \delta_i}_{\substack{\text{how much the new rule}\\\text{improves false negatives}}}{\color{black}+}
-\color{blue}\underbrace{\color{black}\sum_{i\in Z} \delta_i}_{\substack{\text{how much the new rule}\\\text{hurts false positives}}}
+\min_{\delta, z} \color{blue}\underbrace{\color{black}\lambda\left(1+\sum_{j\in J}z_j\right)}&lt;em&gt;{\substack{\text{complexity of new rule}\\\text{in terms of features selected}}} {\color{black}-}
+\color{blue}\underbrace{\color{black}\sum&lt;/em&gt;{i\in P} \mu_i \delta_i}&lt;em&gt;{\substack{\text{how much the new rule}\\\text{improves false negatives}}}{\color{black}+}
+\color{blue}\underbrace{\color{black}\sum&lt;/em&gt;{i\in Z} \delta_i}_{\substack{\text{how much the new rule}\\\text{hurts false positives}}}
 $$&lt;/p&gt;
 &lt;p&gt;$$\begin{aligned}
-\mbox{s.t.} \qquad &amp;amp; \delta_i + z_j\le 1 \qquad j\in S_i, \qquad i\in P \\&lt;br&gt;
-&amp;amp;  \delta_i \ge 1- \sum_{j\in S_i} z_j \qquad \delta_i\ge 0 \qquad i\in Z\\&lt;br&gt;
-&amp;amp; \sum_{j\in J} z_j \le D \\&lt;br&gt;
+\mbox{s.t.} \qquad &amp;amp; \delta_i + z_j\le 1 \qquad j\in S_i, \qquad i\in P \\
+&amp;amp;  \delta_i \ge 1- \sum_{j\in S_i} z_j \qquad \delta_i\ge 0 \qquad i\in Z\\
+&amp;amp; \sum_{j\in J} z_j \le D \\
 &amp;amp; z_j \in \{0, 1\} \qquad \forall j\in J
 \end{aligned}
 $$&lt;/p&gt;
@@ -527,8 +568,8 @@ $$&lt;/p&gt;
 &lt;h2 id=&#34;solutions&#34;&gt;Solutions&lt;/h2&gt;
 &lt;p&gt;For general graphs, finding the maximum cliques is a hard problem (NP-complete). An integer programming approach that involves edges can be written as:&lt;/p&gt;
 &lt;p&gt;$$\begin{aligned}
-\max_x &amp;amp; \sum_{i\in V} d_i x_{i}\\&lt;br&gt;
-\mbox{s.t.} \qquad &amp;amp; x_i + x_j \le 1 \quad \forall (i, j) \in \bar{E} \\&lt;br&gt;
+\max_x &amp;amp; \sum_{i\in V} d_i x_{i}\\
+\mbox{s.t.} \qquad &amp;amp; x_i + x_j \le 1 \quad \forall (i, j) \in \bar{E} \\
 &amp;amp; x_i \in {0, 1} \qquad \forall i\in V
 \end{aligned}
 $$&lt;/p&gt;
@@ -540,8 +581,8 @@ $$&lt;/p&gt;
 &lt;h2 id=&#34;an-alternative-formulation&#34;&gt;An alternative formulation&lt;/h2&gt;
 &lt;p&gt;The notion of the complement edge set $\bar{E}$ can be strengthened using independent sets. If you know an independent set, a clique can contain at most one vertex from such a set. To write this as a constraint, one would need to consider &lt;em&gt;maximum&lt;/em&gt; independent sets, lest you allow the omitted vertices to be included in the clique. Further, you would need to look at all maximum independent sets that arise in $G$. Assume for a moment that the set of maximum independent sets $\mathbb{S}$ is known. Then the problem of finding the maximum weighted clique can be written as&lt;/p&gt;
 &lt;p&gt;$$\begin{aligned}
-\max_x &amp;amp; \sum_{i\in V} d_i x_{i}\\&lt;br&gt;
-\mbox{s.t.} \qquad &amp;amp; \sum_{i\in I} x_i \le 1 \quad \forall I \in \mathbb{S} \\&lt;br&gt;
+\max_x &amp;amp; \sum_{i\in V} d_i x_{i}\\
+\mbox{s.t.} \qquad &amp;amp; \sum_{i\in I} x_i \le 1 \quad \forall I \in \mathbb{S} \\
 &amp;amp; x_i \in {0, 1} \qquad \forall i\in V
 \end{aligned}
 $$&lt;/p&gt;
@@ -583,10 +624,10 @@ nx.draw(G, with_labels=True)
 &lt;figure id=&#34;figure-an-test-graph-with-known-max-cliques&#34;&gt;
 
 
-  &lt;a data-fancybox=&#34;&#34; href=&#34;https://rahulnair23.github.io/post/max-clique/graph_hu66fa372f34c55a7f200bf8e44ac04457_35825_2000x2000_fit_lanczos_2.png&#34; data-caption=&#34;An test graph with known max cliques&#34;&gt;
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://rahulnair23.github.io/post/max-clique/graph_hu66fa372f34c55a7f200bf8e44ac04457_35825_2000x2000_fit_lanczos_3.png&#34; data-caption=&#34;An test graph with known max cliques&#34;&gt;
 
 
-  &lt;img data-src=&#34;https://rahulnair23.github.io/post/max-clique/graph_hu66fa372f34c55a7f200bf8e44ac04457_35825_2000x2000_fit_lanczos_2.png&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;640&#34; height=&#34;480&#34;&gt;
+  &lt;img data-src=&#34;https://rahulnair23.github.io/post/max-clique/graph_hu66fa372f34c55a7f200bf8e44ac04457_35825_2000x2000_fit_lanczos_3.png&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;640&#34; height=&#34;480&#34;&gt;
 &lt;/a&gt;
 
 

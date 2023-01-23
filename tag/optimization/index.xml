@@ -7,7 +7,7 @@
     <description>optimization</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Fri, 30 Apr 2021 13:26:35 +0100</lastBuildDate>
     <image>
-      <url>https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_2.png</url>
+      <url>https://rahulnair23.github.io/images/icon_hu0b7a4cb9992c9ac0e91bd28ffd38dd00_9727_512x512_fill_lanczos_center_3.png</url>
       <title>optimization</title>
       <link>https://rahulnair23.github.io/tag/optimization/</link>
     </image>
@@ -24,9 +24,9 @@
 &lt;h2 id=&#34;the-problem&#34;&gt;The problem&lt;/h2&gt;
 &lt;p&gt;In the basic setting, we have a set $X$ of elements and a collection of possible partitions $K={k_1, k_2,&amp;hellip;,k_m}$ and a cost function $c(k_j)$ associated with each partition. $K$ is a very large collection as there are several ways to divide a set. We define a membership matrix $A = [a_{ij}]$ where $a_{ij}=1$ if element $i$ from $X$ is in the partition $k_j$ and $0$ otherwise. We denote $x_j$ as a decision variable to decide if partition $k_j$ is employed/used or not. With these definitions, the set partitioning problem can be written as:&lt;/p&gt;
 &lt;p&gt;$$\begin{aligned}
-\min_{x} \quad &amp;amp; \sum_{j=1}^{n} c(k_j) x_j\\&lt;br&gt;
-\textrm{s.t.} \quad &amp;amp; \sum_{j=1}^{m} a_{ij}x_j=1 \quad \forall i=1,&amp;hellip;,n\\&lt;br&gt;
-&amp;amp;x_j\in {0,1}    \\&lt;br&gt;
+\min_{x} \quad &amp;amp; \sum_{j=1}^{n} c(k_j) x_j\\
+\textrm{s.t.} \quad &amp;amp; \sum_{j=1}^{m} a_{ij}x_j=1 \quad \forall i=1,&amp;hellip;,n\\
+&amp;amp;x_j\in {0,1}    \\
 \end{aligned}
 $$&lt;/p&gt;
 &lt;p&gt;The program seeks to find a set of partitions that divide the input feature space such that every element is covered by exactly one partition. (If we allow for overlap between partitions, we could use a coverage type constraint $\sum a_{ij}x_j \ge 1$ as well). The objective is to find a partitioning that minimizes the total cost of the partition.&lt;/p&gt;
@@ -42,8 +42,8 @@ $$&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;$$\begin{aligned}
-\min_{z} \quad &amp;amp; c(z) - \sum_{i=1}^{n} \pi_i z_i\\&lt;br&gt;
-&amp;amp;z_i\in {0,1}    \\&lt;br&gt;
+\min_{z} \quad &amp;amp; c(z) - \sum_{i=1}^{n} \pi_i z_i\\
+&amp;amp;z_i\in {0,1}    \\
 \end{aligned}
 $$&lt;/p&gt;
 &lt;p&gt;where $c(z)$ denotes the cost of the chosen partition. Depending on your problem specifics and the nature of this function the manner in which you solve this would vary. Looking for the column with the greatest negative reduced cost is a heuristic step and can be replaced by other procedures to generate new candidate partitions if you have some insights that help you to do so.&lt;/p&gt;
@@ -196,8 +196,8 @@ Partition: &#39;abcdefghijklmnopqrstuvwxyz&#39; with cost: 1.0.
 &lt;h2 id=&#34;solutions&#34;&gt;Solutions&lt;/h2&gt;
 &lt;p&gt;For general graphs, finding the maximum cliques is a hard problem (NP-complete). An integer programming approach that involves edges can be written as:&lt;/p&gt;
 &lt;p&gt;$$\begin{aligned}
-\max_x &amp;amp; \sum_{i\in V} d_i x_{i}\\&lt;br&gt;
-\mbox{s.t.} \qquad &amp;amp; x_i + x_j \le 1 \quad \forall (i, j) \in \bar{E} \\&lt;br&gt;
+\max_x &amp;amp; \sum_{i\in V} d_i x_{i}\\
+\mbox{s.t.} \qquad &amp;amp; x_i + x_j \le 1 \quad \forall (i, j) \in \bar{E} \\
 &amp;amp; x_i \in {0, 1} \qquad \forall i\in V
 \end{aligned}
 $$&lt;/p&gt;
@@ -209,8 +209,8 @@ $$&lt;/p&gt;
 &lt;h2 id=&#34;an-alternative-formulation&#34;&gt;An alternative formulation&lt;/h2&gt;
 &lt;p&gt;The notion of the complement edge set $\bar{E}$ can be strengthened using independent sets. If you know an independent set, a clique can contain at most one vertex from such a set. To write this as a constraint, one would need to consider &lt;em&gt;maximum&lt;/em&gt; independent sets, lest you allow the omitted vertices to be included in the clique. Further, you would need to look at all maximum independent sets that arise in $G$. Assume for a moment that the set of maximum independent sets $\mathbb{S}$ is known. Then the problem of finding the maximum weighted clique can be written as&lt;/p&gt;
 &lt;p&gt;$$\begin{aligned}
-\max_x &amp;amp; \sum_{i\in V} d_i x_{i}\\&lt;br&gt;
-\mbox{s.t.} \qquad &amp;amp; \sum_{i\in I} x_i \le 1 \quad \forall I \in \mathbb{S} \\&lt;br&gt;
+\max_x &amp;amp; \sum_{i\in V} d_i x_{i}\\
+\mbox{s.t.} \qquad &amp;amp; \sum_{i\in I} x_i \le 1 \quad \forall I \in \mathbb{S} \\
 &amp;amp; x_i \in {0, 1} \qquad \forall i\in V
 \end{aligned}
 $$&lt;/p&gt;
@@ -252,10 +252,10 @@ nx.draw(G, with_labels=True)
 &lt;figure id=&#34;figure-an-test-graph-with-known-max-cliques&#34;&gt;
 
 
-  &lt;a data-fancybox=&#34;&#34; href=&#34;https://rahulnair23.github.io/post/max-clique/graph_hu66fa372f34c55a7f200bf8e44ac04457_35825_2000x2000_fit_lanczos_2.png&#34; data-caption=&#34;An test graph with known max cliques&#34;&gt;
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://rahulnair23.github.io/post/max-clique/graph_hu66fa372f34c55a7f200bf8e44ac04457_35825_2000x2000_fit_lanczos_3.png&#34; data-caption=&#34;An test graph with known max cliques&#34;&gt;
 
 
-  &lt;img data-src=&#34;https://rahulnair23.github.io/post/max-clique/graph_hu66fa372f34c55a7f200bf8e44ac04457_35825_2000x2000_fit_lanczos_2.png&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;640&#34; height=&#34;480&#34;&gt;
+  &lt;img data-src=&#34;https://rahulnair23.github.io/post/max-clique/graph_hu66fa372f34c55a7f200bf8e44ac04457_35825_2000x2000_fit_lanczos_3.png&#34; class=&#34;lazyload&#34; alt=&#34;&#34; width=&#34;640&#34; height=&#34;480&#34;&gt;
 &lt;/a&gt;
 
 
